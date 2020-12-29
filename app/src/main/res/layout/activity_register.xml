@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            tools:srcCompat="?attr/actionModeCloseDrawable"
+            android:src="@drawable/icon_back_arrow"
             android:transitionName="transition_back_arrow_btn"/>
 
         <TextView
