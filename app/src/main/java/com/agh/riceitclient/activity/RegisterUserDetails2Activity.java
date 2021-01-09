@@ -10,10 +10,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.RegisterDTO;
+import com.agh.riceitclient.dto.UsernameDTO;
+import com.agh.riceitclient.retrofit.ServiceGenerator;
+import com.agh.riceitclient.service.UserService;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterUserDetails2Activity extends AppCompatActivity {
 
@@ -22,6 +30,7 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
     TextView titleText;
     TextInputLayout heightInput, weightInput, kInput;
 
+    UserService userService = ServiceGenerator.createService(UserService.class);
     RegisterDTO registerDTO;
 
     @Override
@@ -47,17 +56,31 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
             return;
         }
 
-        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+        Call<UsernameDTO> call = userService.register(registerDTO);
+        call.enqueue(new Callback<UsernameDTO>() {
+            @Override
+            public void onResponse(Call<UsernameDTO> call, Response<UsernameDTO> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(RegisterUserDetails2Activity.this, "You have been successfully registered", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.putExtra("username", response.body() != null ? response.body().getUsername() : null);
 
-        Pair[] pairs = new Pair[4];
-        pairs[0] = new Pair<View, String>(backBtn, "transition_back_arrow_btn");
-        pairs[1] = new Pair<View, String>(titleText, "transition_title_text");
-        pairs[2] = new Pair<View, String>(registerBtn, "transition_register_btn");
-        pairs[3] = new Pair<View, String>(loginBtn, "transition_login_btn");
+                    Pair[] pairs = new Pair[4];
+                    pairs[0] = new Pair<View, String>(backBtn, "transition_back_arrow_btn");
+                    pairs[1] = new Pair<View, String>(titleText, "transition_title_text");
+                    pairs[2] = new Pair<View, String>(registerBtn, "transition_register_btn");
+                    pairs[3] = new Pair<View, String>(loginBtn, "transition_login_btn");
 
-        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(RegisterUserDetails2Activity.this, pairs);
-        startActivity(intent, activityOptions.toBundle());
+                    ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(RegisterUserDetails2Activity.this, pairs);
+                    startActivity(intent, activityOptions.toBundle());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UsernameDTO> call, Throwable t) {
+
+            }
+        });
     }
 
     private boolean validateHeight(){
@@ -75,6 +98,7 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
         } else {
             heightInput.setError(null);
             heightInput.setErrorEnabled(false);
+            registerDTO.setHeight(Double.parseDouble(val));
             return true;
         }
     }
@@ -94,6 +118,7 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
         } else {
             weightInput.setError(null);
             weightInput.setErrorEnabled(false);
+            registerDTO.setWeight(Double.parseDouble(val));
             return true;
         }
     }
@@ -113,6 +138,7 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
         } else {
             kInput.setError(null);
             kInput.setErrorEnabled(false);
+            registerDTO.setK(Double.parseDouble(val));
             return true;
         }
     }
