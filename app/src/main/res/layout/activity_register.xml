@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="#f9d71c"
     android:padding="30dp"
-    tools:context=".RegisterActivity">
+    tools:context=".activity.RegisterActivity"
+    android:transitionName="transition_register">
 
 
     <LinearLayout
@@ -42,6 +43,7 @@
             android:layout_marginTop="40dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_username_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username"
@@ -62,6 +64,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
@@ -82,6 +85,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
@@ -110,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="next"
-            android:onClick="callNextRegisterScreen"
+            android:onClick="checkUsernameAvailability"
             android:backgroundTint="@color/black"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"

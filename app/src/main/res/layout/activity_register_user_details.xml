@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#f9d71c"
     android:padding="30dp"
-    tools:context=".RegisterUserDetailsActivity">
+    tools:context=".activity.RegisterUserDetailsActivity">
 
 
     <LinearLayout
@@ -49,6 +49,7 @@
                 android:textSize="18sp" />
 
             <RadioGroup
+                android:id="@+id/register_user_details_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -79,6 +80,7 @@
                 android:textSize="18sp" />
 
             <DatePicker
+                android:id="@+id/register_user_details_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
