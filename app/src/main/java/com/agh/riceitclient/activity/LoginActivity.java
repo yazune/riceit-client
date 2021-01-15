@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,14 +16,11 @@ import com.agh.riceitclient.dto.TokenDTO;
 import com.agh.riceitclient.retrofit.AuthToken;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
 import com.agh.riceitclient.service.AuthService;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -67,7 +63,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     TokenDTO tokenDTO = response.body();
                     AuthToken.addToken(tokenDTO.getType(), tokenDTO.getToken());
-                    Toast.makeText(LoginActivity.this, "You have been successfully logged in\nToken: " + AuthToken.getToken(), Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), MealsActivity.class);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "Wrong credentials!", Toast.LENGTH_LONG).show();
