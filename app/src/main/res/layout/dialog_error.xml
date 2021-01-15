@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:elevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialog_error_bar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:background="#CDD0393F" />
+
+    <ImageView
+        android:id="@+id/dialog_error_image"
+        android:layout_width="60dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/icon_circle_cross_white" />
+
+    <TextView
+        android:id="@+id/dialog_error_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_below="@id/dialog_error_bar"
+        android:fontFamily="sans-serif-black"
+        android:text="Oh snap!"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/dialog_error_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-black"
+        android:text="Change a few things up and try submitting again."
+        android:textSize="12sp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/dialog_error_title"/>
+
+    <Button
+        android:id="@+id/dialog_error_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@drawable/btn_dialog_error"
+        android:text="OK"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_below="@+id/dialog_error_description"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
+
+</RelativeLayout>

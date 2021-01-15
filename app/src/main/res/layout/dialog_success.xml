@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:elevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialog_success_bar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:background="#5C9F60" />
+
+    <ImageView
+        android:id="@+id/dialog_success_image"
+        android:layout_width="60dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/icon_check_white" />
+
+    <TextView
+        android:id="@+id/dialog_success_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_below="@id/dialog_success_bar"
+        android:fontFamily="sans-serif-black"
+        android:text="Great!"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/dialog_success_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-black"
+        android:text="You have been successfully registered"
+        android:textSize="12sp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/dialog_success_title"/>
+
+    <Button
+        android:id="@+id/dialog_success_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@drawable/btn_dialog_success"
+        android:elevation="10dp"
+        android:text="OK"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_below="@+id/dialog_success_description"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
+
+</RelativeLayout>
