@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MealsActivity"
+    android:orientation="vertical"
+    android:background="#f5f5f5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/datebar_yesterday_constraint"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_weight=".3"
+            android:onClick="choosePreviousDay">
+
+            <TextView
+                android:id="@+id/datebar_yesterday_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(date)"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias=".5"
+                app:layout_constraintVertical_bias=".3"/>
+
+            <TextView
+                android:id="@+id/datebar_yesterday_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Yesterday)"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias=".5"
+                app:layout_constraintVertical_bias=".7"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/datebar_today_constraint"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_weight=".3">
+
+            <TextView
+                android:id="@+id/datebar_today_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(date)"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias=".5"
+                app:layout_constraintVertical_bias=".3"/>
+
+            <TextView
+                android:id="@+id/datebar_today_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Today)"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias=".5"
+                app:layout_constraintVertical_bias=".7"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/datebar_tomorrow_constraint"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_weight=".3"
+            android:onClick="chooseNextDay">
+
+            <TextView
+                android:id="@+id/datebar_tomorrow_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(date)"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias=".5"
+                app:layout_constraintVertical_bias=".3"/>
+
+            <TextView
+                android:id="@+id/datebar_tomorrow_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Tomorrow)"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias=".5"
+                app:layout_constraintVertical_bias=".7"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/meals_rv"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>
