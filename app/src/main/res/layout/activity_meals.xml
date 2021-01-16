@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,43 +9,309 @@
     android:orientation="vertical"
     android:background="#f5f5f5">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/meals_summary_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:padding="10dp"
+        android:background="@drawable/summary_bg">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/datebar_yesterday_constraint"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
+        <ProgressBar
+            android:id="@+id/kcal_bar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:scaleY="3"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:indeterminate="false"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+        <TextView
+            android:id="@+id/kcal_eaten_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"
+            android:layout_below="@id/kcal_bar"
+            android:layout_toStartOf="@id/dash_sign"/>
+
+        <TextView
+            android:id="@+id/dash_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/kcal_bar"
+            android:layout_toStartOf="@id/kcal_burnt_amount"/>
+
+        <TextView
+            android:id="@+id/kcal_burnt_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/kcal_bar"
+            android:layout_toStartOf="@id/equals_sign"/>
+
+        <TextView
+            android:id="@+id/equals_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="="
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/kcal_bar"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/kcal_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="1000"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/kcal_bar"
+            android:layout_toEndOf="@id/equals_sign"/>
+
+        <TextView
+            android:id="@+id/slash_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="/"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/kcal_bar"
+            android:layout_toEndOf="@id/kcal_total_amount"/>
+
+        <TextView
+            android:id="@+id/kcal_daily_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="1000"
+            android:layout_below="@id/kcal_bar"
+            android:layout_toEndOf="@id/slash_sign"/>
+
+        <TextView
+            android:id="@+id/kcal_eaten_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="eaten"
+            android:textSize="10sp"
+            android:layout_below="@id/kcal_eaten_amount"
+            android:layout_alignEnd="@id/kcal_eaten_amount"/>
+
+        <TextView
+            android:id="@+id/kcal_burnt_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="burnt"
+            android:textSize="10sp"
+            android:layout_below="@id/kcal_burnt_amount"
+            android:layout_alignEnd="@id/kcal_burnt_amount"/>
+
+        <TextView
+            android:id="@+id/kcal_total_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="total"
+            android:textSize="10sp"
+            android:layout_below="@id/kcal_total_amount"
+            android:layout_alignEnd="@id/kcal_total_amount"/>
+
+        <TextView
+            android:id="@+id/kcal_daily_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="daily"
+            android:textSize="10sp"
+            android:layout_below="@id/kcal_daily_amount"
+            android:layout_alignEnd="@id/kcal_daily_amount"/>
+
+        <LinearLayout
+            android:id="@+id/bars_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/kcal_eaten_text"
+            android:layout_alignStart="@id/kcal_bar"
+            android:layout_alignEnd="@id/kcal_bar">
+
+            <ProgressBar
+                android:id="@+id/prot_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:scaleY="3"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+            <ProgressBar
+                android:id="@+id/fat_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:scaleY="3"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+            <ProgressBar
+                android:id="@+id/carb_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:scaleY="3"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/prot_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bars_linear"
+            android:layout_alignStart="@id/bars_linear"
+            android:layout_marginStart="15dp">
+
+            <TextView
+                android:id="@+id/prot_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="10.0"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="/" />
+
+            <TextView
+                android:id="@+id/prot_daily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="10.0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fat_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bars_linear"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/fat_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="10.0"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="/" />
+
+            <TextView
+                android:id="@+id/fat_daily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="10.0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/carb_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bars_linear"
+            android:layout_alignEnd="@id/bars_linear"
+            android:layout_marginEnd="15dp">
+
+            <TextView
+                android:id="@+id/carb_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="10.0"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="/" />
+
+            <TextView
+                android:id="@+id/carb_daily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="10.0"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/prot_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="prots"
+            android:layout_below="@id/prot_linear"
+            android:layout_alignStart="@id/prot_linear"
+            android:layout_marginStart="24dp"/>
+
+        <TextView
+            android:id="@+id/fat_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fats"
+            android:layout_below="@id/fat_linear"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/carb_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="carbs"
+            android:layout_below="@id/carb_linear"
+            android:layout_alignEnd="@id/carb_linear"
+            android:layout_marginEnd="20dp"/>
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/meals_rv"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/meals_summary_tab"
+        android:layout_above="@id/meals_days_linear"/>
+
+    <LinearLayout
+        android:id="@+id/meals_days_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_yesterday"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight=".3"
-            android:onClick="choosePreviousDay">
-
-            <TextView
-                android:id="@+id/datebar_yesterday_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(date)"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintVertical_bias=".3"/>
-
-            <TextView
-                android:id="@+id/datebar_yesterday_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(Yesterday)"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintVertical_bias=".7"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="Yesterday"
+            android:onClick="choosePreviousDay"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/datebar_today_constraint"
@@ -58,18 +324,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(date)"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintVertical_bias=".3"/>
+                app:layout_constraintVertical_bias=".4"/>
 
             <TextView
                 android:id="@+id/datebar_today_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(Today)"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -79,46 +347,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/datebar_tomorrow_constraint"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
+        <Button
+            android:id="@+id/btn_tomorrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight=".3"
-            android:onClick="chooseNextDay">
+            android:text="Tomorrow"
+            android:onClick="chooseNextDay"/>
 
-            <TextView
-                android:id="@+id/datebar_tomorrow_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(date)"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintVertical_bias=".3"/>
-
-            <TextView
-                android:id="@+id/datebar_tomorrow_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(Tomorrow)"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintVertical_bias=".7"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/meals_rv"
-        android:elevation="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
 
-</LinearLayout>
+
+</RelativeLayout>
