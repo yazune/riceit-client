@@ -5,6 +5,7 @@ import com.agh.riceitclient.dto.DateDTO;
 import com.agh.riceitclient.dto.MealsDTO;
 import com.agh.riceitclient.dto.RemoveFoodDTO;
 import com.agh.riceitclient.dto.RemoveMealDTO;
+import com.agh.riceitclient.dto.UpdateFoodDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -27,4 +28,7 @@ public interface MealService {
 
     @POST("/meals/addFood")
     Call<Void> addFood(@Header("Authorization") String authToken, @Body AddFoodDTO addFoodDTO);
+
+    @POST("/meals/updateFood")
+    Call<Void> updateFood(@Header("Authorization") String authToken, @Body UpdateFoodDTO updateFoodDTO);
 }

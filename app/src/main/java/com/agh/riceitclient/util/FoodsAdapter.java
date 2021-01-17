@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.activity.AddFoodActivity;
+import com.agh.riceitclient.activity.UpdateFoodActivity;
+import com.agh.riceitclient.dto.UpdateFoodDTO;
 import com.agh.riceitclient.fragment.DecideDialogFragment;
 import com.agh.riceitclient.model.Food;
 
@@ -71,6 +73,7 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
 
         if(viewType == R.layout.food_item){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item, parent, false);
+
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.btn_create_food, parent, false);
         }
@@ -100,6 +103,19 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
                     dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "decideDialogFragment");
                 }
             });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Intent i = new Intent(activity, UpdateFoodActivity.class);
+                    UpdateFoodDTO updateFoodDTO = new UpdateFoodDTO();;
+                    updateFoodDTO.fillWithFood(food, food.getId());
+                    i.putExtra("updateFoodDTO", updateFoodDTO);
+                    (activity).startActivityForResult(i, ActivityType.UPDATE_FOOD.code);
+                    return true;
+                }
+            });
+
         } else {
             holder.addFoodBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

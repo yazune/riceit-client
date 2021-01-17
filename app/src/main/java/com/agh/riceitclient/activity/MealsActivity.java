@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.AddFoodDTO;
@@ -20,6 +21,7 @@ import com.agh.riceitclient.dto.DateDTO;
 import com.agh.riceitclient.dto.MealsDTO;
 import com.agh.riceitclient.dto.RemoveFoodDTO;
 import com.agh.riceitclient.dto.RemoveMealDTO;
+import com.agh.riceitclient.dto.UpdateFoodDTO;
 import com.agh.riceitclient.model.Day;
 import com.agh.riceitclient.model.Meal;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
@@ -247,6 +249,24 @@ public class MealsActivity extends AppCompatActivity implements RemoveObjectList
         });
     }
 
+    public void enqueueUpdateFood(UpdateFoodDTO updateFoodDTO){
+        Call<Void> call = mealService.updateFood(authToken, updateFoodDTO);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    enqueueGetMeals(today);
+                    enqueueGetSummary(today);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void callCreateMeal(View view){
         DateDTO dateDTO = new DateDTO(today.toString());
         Call<Void> call = mealService.createMeal(authToken, dateDTO);
@@ -274,6 +294,12 @@ public class MealsActivity extends AppCompatActivity implements RemoveObjectList
             if(resultCode == Activity.RESULT_OK){
                 AddFoodDTO addFoodDTO = (AddFoodDTO)data.getSerializableExtra("addFoodDTO");
                 enqueueAddFood(addFoodDTO);
+            }
+        } else if (requestCode == ActivityType.UPDATE_FOOD.code){
+            if(resultCode == Activity.RESULT_OK){
+                UpdateFoodDTO updateFoodDTO = (UpdateFoodDTO)data.getSerializableExtra("updateFoodDTO");
+                //enqueueUpdateFood(updateFoodDTO);
+                Toast.makeText(MealsActivity.this, "name: " + updateFoodDTO.getName() + "\nkcal: " + updateFoodDTO.getKcal(), Toast.LENGTH_SHORT).show();
             }
         }
     }
