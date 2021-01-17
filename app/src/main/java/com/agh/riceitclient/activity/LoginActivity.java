@@ -2,7 +2,9 @@ package com.agh.riceitclient.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +15,6 @@ import android.widget.Toast;
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.LoginDTO;
 import com.agh.riceitclient.dto.TokenDTO;
-import com.agh.riceitclient.retrofit.AuthToken;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
 import com.agh.riceitclient.service.AuthService;
 import com.google.android.material.textfield.TextInputLayout;
@@ -61,8 +62,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
                 if(response.isSuccessful()){
-                    TokenDTO tokenDTO = response.body();
-                    AuthToken.addToken(tokenDTO.getType(), tokenDTO.getToken());
+                    String authToken = response.body().getType() + " " + response.body().getToken();
+                    SharedPreferences sharedPreferences = getSharedPreferences("RiceItClient", Context.MODE_PRIVATE);
+                    sharedPreferences.edit().putString("TOKEN", authToken).apply();
+
                     Intent intent = new Intent(getApplicationContext(), MealsActivity.class);
                     startActivity(intent);
                 }

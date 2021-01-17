@@ -1,25 +1,31 @@
 package com.agh.riceitclient.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.agh.riceitclient.R;
+import com.agh.riceitclient.dto.AddFoodDTO;
 import com.agh.riceitclient.dto.DateDTO;
 import com.agh.riceitclient.dto.MealsDTO;
 import com.agh.riceitclient.dto.RemoveFoodDTO;
 import com.agh.riceitclient.dto.RemoveMealDTO;
 import com.agh.riceitclient.model.Day;
 import com.agh.riceitclient.model.Meal;
-import com.agh.riceitclient.retrofit.AuthToken;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
 import com.agh.riceitclient.service.DayService;
 import com.agh.riceitclient.service.MealService;
+import com.agh.riceitclient.util.ActivityType;
 import com.agh.riceitclient.util.MealsAdapter;
 import com.agh.riceitclient.util.RemoveObjectListener;
 
@@ -36,7 +42,7 @@ import retrofit2.Response;
 
 public class MealsActivity extends AppCompatActivity implements RemoveObjectListener {
 
-    String authToken = AuthToken.getType() +" " + AuthToken.getToken();
+    String authToken;
     MealService mealService = ServiceGenerator.createService(MealService.class);
     DayService dayService = ServiceGenerator.createService(DayService.class);
 
@@ -77,6 +83,9 @@ public class MealsActivity extends AppCompatActivity implements RemoveObjectList
         fatDaily = findViewById(R.id.fat_daily);
         carbEaten = findViewById(R.id.carb_amount);
         carbDaily = findViewById(R.id.carb_daily);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("RiceItClient", Context.MODE_PRIVATE);
+        authToken = sharedPreferences.getString("TOKEN", null); //second parameter is default
 
         mealsRv = findViewById(R.id.meals_rv);
         mealsRv.setLayoutManager(new LinearLayoutManager(MealsActivity.this));
@@ -207,12 +216,32 @@ public class MealsActivity extends AppCompatActivity implements RemoveObjectList
         call.enqueue(new Callback<Day>() {
             @Override
             public void onResponse(Call<Day> call, Response<Day> response) {
-                summaryMap.put(today, response.body());
-                updateSummaryLayout(summaryMap.get(today));
+                if(response.isSuccessful()){
+                    summaryMap.put(today, response.body());
+                    updateSummaryLayout(summaryMap.get(today));
+                }
             }
 
             @Override
             public void onFailure(Call<Day> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void enqueueAddFood(AddFoodDTO addFoodDTO){
+        Call<Void> call = mealService.addFood(authToken, addFoodDTO);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    enqueueGetMeals(today);
+                    enqueueGetSummary(today);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
 
             }
         });
@@ -238,7 +267,16 @@ public class MealsActivity extends AppCompatActivity implements RemoveObjectList
         });
     }
 
-    public void callCreateFood(View view){}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ActivityType.ADD_FOOD.code){
+            if(resultCode == Activity.RESULT_OK){
+                AddFoodDTO addFoodDTO = (AddFoodDTO)data.getSerializableExtra("addFoodDTO");
+                enqueueAddFood(addFoodDTO);
+            }
+        }
+    }
 
     @Override
     public void callRemoveMealOrFood(boolean removeMeal, long receivedData) {

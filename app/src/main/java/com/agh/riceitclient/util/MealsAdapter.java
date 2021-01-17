@@ -115,7 +115,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
 
             linearLayoutManager.setInitialPrefetchItemCount(meal.getFoods().size());
 
-            FoodsAdapter foodsAdapter = new FoodsAdapter(activity, context);
+            FoodsAdapter foodsAdapter = new FoodsAdapter(activity, context, meal.getId());
             foodsAdapter.setFoods(meal.getFoods());
             holder.foodsRv.setLayoutManager(linearLayoutManager);
             holder.foodsRv.setAdapter(foodsAdapter);

@@ -1,5 +1,6 @@
 package com.agh.riceitclient.service;
 
+import com.agh.riceitclient.dto.AddFoodDTO;
 import com.agh.riceitclient.dto.DateDTO;
 import com.agh.riceitclient.dto.MealsDTO;
 import com.agh.riceitclient.dto.RemoveFoodDTO;
@@ -23,4 +24,7 @@ public interface MealService {
 
     @POST("/meals/removeFood")
     Call<Void> removeFood(@Header("Authorization") String authToken, @Body RemoveFoodDTO removeFoodDTO);
+
+    @POST("/meals/addFood")
+    Call<Void> addFood(@Header("Authorization") String authToken, @Body AddFoodDTO addFoodDTO);
 }

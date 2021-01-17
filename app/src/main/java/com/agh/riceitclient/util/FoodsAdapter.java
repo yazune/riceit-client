@@ -2,6 +2,7 @@ package com.agh.riceitclient.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
+import com.agh.riceitclient.activity.AddFoodActivity;
 import com.agh.riceitclient.fragment.DecideDialogFragment;
 import com.agh.riceitclient.model.Food;
 
@@ -25,10 +27,12 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
     private ArrayList<Food> foods;
     private Activity activity;
     private Context context;
+    private long mealId;
 
-    public FoodsAdapter(Activity activity, Context context) {
+    public FoodsAdapter(Activity activity, Context context, long mealId) {
         this.activity = activity;
         this.context = context;
+        this.mealId = mealId;
     }
 
     class SubItemViewHolder extends RecyclerView.ViewHolder {
@@ -96,7 +100,15 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
                     dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "decideDialogFragment");
                 }
             });
-
+        } else {
+            holder.addFoodBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(activity, AddFoodActivity.class);
+                    i.putExtra("mealId", mealId);
+                    (activity).startActivityForResult(i, ActivityType.ADD_FOOD.code);
+                }
+            });
         }
     }
 
