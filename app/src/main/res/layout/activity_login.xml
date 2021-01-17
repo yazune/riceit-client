@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity"
-    android:background="#f9d71c"
+    android:background="@color/white"
     android:padding="30dp"
     android:transitionName="transition_login">
 
