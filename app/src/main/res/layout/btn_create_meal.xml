@@ -8,7 +8,6 @@
 
     <Button
         android:id="@+id/create_meal_button"
-        android:onClick="callCreateMeal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/btn_create_meal"

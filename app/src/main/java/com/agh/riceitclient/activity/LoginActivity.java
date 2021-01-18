@@ -66,8 +66,11 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences("RiceItClient", Context.MODE_PRIVATE);
                     sharedPreferences.edit().putString("TOKEN", authToken).apply();
 
-                    Intent intent = new Intent(getApplicationContext(), MealsActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), MealsActivity.class);
+//                    startActivity(intent);
+
+                      Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                      startActivity(intent);
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "Wrong credentials!", Toast.LENGTH_LONG).show();

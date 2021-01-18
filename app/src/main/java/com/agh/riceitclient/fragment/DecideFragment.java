@@ -1,7 +1,6 @@
 package com.agh.riceitclient.fragment;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,25 +8,24 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.util.RemoveObjectListener;
+import com.agh.riceitclient.util.MealsListener;
 
-public class DecideDialogFragment extends DialogFragment {
-
+public class DecideFragment extends DialogFragment {
     TextView titleText, descriptionText;
     Button cancelBtn, confirmBtn;
-    private RemoveObjectListener listener;
     private long dataToRemove;
+    private MealsListener mealsListener;
     private String dataType;
 
-    public DecideDialogFragment(RemoveObjectListener listener){
-        this.listener = listener;
+
+    public DecideFragment(MealsListener mealsListener){
+        this.mealsListener = mealsListener;
     }
 
     @Nullable
@@ -51,8 +49,7 @@ public class DecideDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 boolean isMeal = dataType.equals("meal");
-                Toast.makeText((Context) listener, "Removing " + dataType + " with id: " + String.valueOf(dataToRemove), Toast.LENGTH_LONG).show();
-                listener.callRemoveMealOrFood(isMeal, dataToRemove);
+                mealsListener.removeMealOrFood(isMeal, dataToRemove);
                 getDialog().dismiss();
             }
         });

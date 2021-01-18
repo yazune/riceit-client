@@ -1,38 +1,48 @@
-package com.agh.riceitclient.activity;
+package com.agh.riceitclient.fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.AddFoodDTO;
 import com.agh.riceitclient.dto.UpdateFoodDTO;
+import com.agh.riceitclient.util.MealsListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class UpdateFoodActivity extends AppCompatActivity {
+public class UpdateFoodFragment extends Fragment {
 
     UpdateFoodDTO updateFoodDTO;
     TextInputLayout nameInput, kcalInput, protInput, fatInput, carbInput;
     Button confirmUpdateFood;
+    MealsListener mealsListener;
+
+    public UpdateFoodFragment(MealsListener mealsListener){
+        this.mealsListener = mealsListener;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        updateFoodDTO = (UpdateFoodDTO) getArguments().getSerializable("updateFoodDTO");
+    }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_food);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v =  inflater.inflate(R.layout.fragment_update_food, container, false);
 
-        nameInput = findViewById(R.id.update_food_name);
-        kcalInput = findViewById(R.id.update_food_kcal);
-        protInput = findViewById(R.id.update_food_prot);
-        fatInput = findViewById(R.id.update_food_fat);
-        carbInput = findViewById(R.id.update_food_carb);
-        confirmUpdateFood = findViewById(R.id.btn_update_food_confirm);
-
-        updateFoodDTO = (UpdateFoodDTO) getIntent().getSerializableExtra("updateFoodDTO");
+        nameInput = v.findViewById(R.id.update_food_name);
+        kcalInput = v.findViewById(R.id.update_food_kcal);
+        protInput = v.findViewById(R.id.update_food_prot);
+        fatInput = v.findViewById(R.id.update_food_fat);
+        carbInput = v.findViewById(R.id.update_food_carb);
+        confirmUpdateFood = v.findViewById(R.id.btn_update_food_confirm);
 
         nameInput.getEditText().setText(updateFoodDTO.getName());
         kcalInput.getEditText().setText(String.valueOf(updateFoodDTO.getKcal()));
@@ -46,6 +56,8 @@ public class UpdateFoodActivity extends AppCompatActivity {
                 updateFood(view);
             }
         });
+
+        return v;
     }
 
     public void updateFood(View view){
@@ -66,9 +78,12 @@ public class UpdateFoodActivity extends AppCompatActivity {
         updateFoodDTO.setFat(fat);
         updateFoodDTO.setCarbohydrate(carb);
 
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("updateFoodDTO", updateFoodDTO);
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
+        mealsListener.enqueueUpdateFood(updateFoodDTO);
+
+        //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();   //todo not tested
+        //getActivity().getFragmentManager().beginTransaction().remove(this).commit(); //todo not tested
+        getActivity().getSupportFragmentManager().popBackStack();
     }
+
+
 }

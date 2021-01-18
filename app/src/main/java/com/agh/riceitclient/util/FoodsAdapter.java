@@ -1,8 +1,6 @@
 package com.agh.riceitclient.util;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +11,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.activity.AddFoodActivity;
-import com.agh.riceitclient.activity.UpdateFoodActivity;
 import com.agh.riceitclient.dto.UpdateFoodDTO;
-import com.agh.riceitclient.fragment.DecideDialogFragment;
+import com.agh.riceitclient.fragment.AddFoodFragment;
+import com.agh.riceitclient.fragment.DecideFragment;
+import com.agh.riceitclient.fragment.UpdateFoodFragment;
 import com.agh.riceitclient.model.Food;
 
 import java.util.ArrayList;
@@ -28,12 +28,12 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
 
     private ArrayList<Food> foods;
     private Activity activity;
-    private Context context;
     private long mealId;
+    private FragmentManager supportFragmentManager;
 
-    public FoodsAdapter(Activity activity, Context context, long mealId) {
+    public FoodsAdapter(Activity activity, FragmentManager supportFragmentManager, long mealId) {
         this.activity = activity;
-        this.context = context;
+        this.supportFragmentManager = supportFragmentManager;
         this.mealId = mealId;
     }
 
@@ -77,7 +77,7 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.btn_create_food, parent, false);
         }
-        return new SubItemViewHolder(view);
+        return new FoodsAdapter.SubItemViewHolder(view);
 
     }
 
@@ -95,23 +95,26 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
             holder.removeFoodBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DecideDialogFragment dialogFragment = new DecideDialogFragment((RemoveObjectListener) activity);
+                    DecideFragment decideFragment = new DecideFragment((MealsListener) activity);
                     Bundle args = new Bundle();
                     args.putLong("dataToRemove", food.getId());
                     args.putString("dataType", "food");
-                    dialogFragment.setArguments(args);
-                    dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "decideDialogFragment");
+                    decideFragment.setArguments(args);
+                    decideFragment.show(((AppCompatActivity) activity).getSupportFragmentManager(), "decideFragment");
                 }
             });
 
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Intent i = new Intent(activity, UpdateFoodActivity.class);
-                    UpdateFoodDTO updateFoodDTO = new UpdateFoodDTO();;
+
+                    Fragment updateFoodFragment = new UpdateFoodFragment((MealsListener) activity);
+                    UpdateFoodDTO updateFoodDTO = new UpdateFoodDTO();
                     updateFoodDTO.fillWithFood(food, food.getId());
-                    i.putExtra("updateFoodDTO", updateFoodDTO);
-                    (activity).startActivityForResult(i, ActivityType.UPDATE_FOOD.code);
+                    Bundle args = new Bundle();
+                    args.putSerializable("updateFoodDTO", updateFoodDTO);
+                    updateFoodFragment.setArguments(args);
+                    supportFragmentManager.beginTransaction().add(R.id.main_container, updateFoodFragment, "updateFoodFragment").addToBackStack(null).commit();
                     return true;
                 }
             });
@@ -120,9 +123,11 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
             holder.addFoodBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(activity, AddFoodActivity.class);
-                    i.putExtra("mealId", mealId);
-                    (activity).startActivityForResult(i, ActivityType.ADD_FOOD.code);
+                    Fragment addFoodFragment = new AddFoodFragment((MealsListener) activity);
+                    Bundle args = new Bundle();
+                    args.putLong("mealId", mealId);
+                    addFoodFragment.setArguments(args);
+                    supportFragmentManager.beginTransaction().add(R.id.main_container, addFoodFragment, "addFoodFragment").addToBackStack(null).commit();
                 }
             });
         }

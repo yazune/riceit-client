@@ -1,7 +1,6 @@
 package com.agh.riceitclient.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,25 +11,26 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.fragment.DecideDialogFragment;
+import com.agh.riceitclient.fragment.DecideFragment;
 import com.agh.riceitclient.model.Meal;
 
 import java.util.ArrayList;
 
-public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHolder>{
+public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHolder> {
 
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
     private ArrayList<Meal> meals;
-    private Context context;
     private Activity activity;
+    private FragmentManager supportFragmentManager;
 
-    public MealsAdapter(Context context, Activity activity){
-        this.context = context;
+    public MealsAdapter(Activity activity, FragmentManager supportFragmentManager){
         this.activity = activity;
+        this.supportFragmentManager = supportFragmentManager;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -65,7 +65,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.btn_create_meal, parent, false);
         }
-        return new ItemViewHolder(view);
+        return new MealsAdapter.ItemViewHolder(view);
     }
 
     @Override
@@ -104,22 +104,29 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
             holder.removeMealBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DecideDialogFragment dialogFragment = new DecideDialogFragment((RemoveObjectListener) activity);
+                    DecideFragment decideFragment = new DecideFragment((MealsListener)activity);
                     Bundle args = new Bundle();
                     args.putLong("dataToRemove", meal.getId());
                     args.putString("dataType", "meal");
-                    dialogFragment.setArguments(args);
-                    dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "decideDialogFragment");
+                    decideFragment.setArguments(args);
+                    decideFragment.show(((AppCompatActivity) activity).getSupportFragmentManager(), "decideFragment");
                 }
             });
 
             linearLayoutManager.setInitialPrefetchItemCount(meal.getFoods().size());
 
-            FoodsAdapter foodsAdapter = new FoodsAdapter(activity, context, meal.getId());
+            FoodsAdapter foodsAdapter = new FoodsAdapter(activity, supportFragmentManager, meal.getId());
             foodsAdapter.setFoods(meal.getFoods());
             holder.foodsRv.setLayoutManager(linearLayoutManager);
             holder.foodsRv.setAdapter(foodsAdapter);
             holder.foodsRv.setRecycledViewPool(viewPool);
+        } else {
+            holder.addMealBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((MealsListener) activity).enqueueCreateMeal();
+                }
+            });
         }
     }
 
@@ -131,4 +138,5 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
     public void setMeals(ArrayList<Meal> meals) {
         this.meals = meals;
     }
+
 }
