@@ -1,9 +1,11 @@
 package com.agh.riceitclient.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -82,7 +84,16 @@ public class UpdateFoodFragment extends Fragment {
 
         //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();   //todo not tested
         //getActivity().getFragmentManager().beginTransaction().remove(this).commit(); //todo not tested
+        hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    public void hideKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
 

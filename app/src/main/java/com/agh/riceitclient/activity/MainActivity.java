@@ -17,7 +17,10 @@ import android.os.Bundle;
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.AddFoodDTO;
 import com.agh.riceitclient.dto.UpdateFoodDTO;
+import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
 import com.agh.riceitclient.fragment.MealsFragment;
+import com.agh.riceitclient.fragment.UserDetailsFragment;
+import com.agh.riceitclient.util.DetailsListener;
 import com.agh.riceitclient.util.MealsListener;
 import com.agh.riceitclient.util.DrawerAdapter;
 import com.agh.riceitclient.util.DrawerItem;
@@ -28,7 +31,8 @@ import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener, MealsListener{
+public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener,
+        MealsListener, DetailsListener {
 
     private static final int POS_CLOSE = 0;
     private static final int POS_DASHBOARD = 1;
@@ -135,8 +139,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             transaction.replace(R.id.main_container, mealsFragment, "mealsFragment");
         }
         else if (position == POS_MY_PROFILE) {
-//            RandomFragment randomFragment = new RandomFragment();
-//            transaction.replace(R.id.main_container, randomFragment);
+            UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
+            transaction.replace(R.id.main_container, userDetailsFragment, "userDetailsFragment");
         }
         else if (position == POS_NEAR) {
 //            RandomFragment randomFragment = new RandomFragment();
@@ -181,5 +185,11 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void enqueueCreateMeal() {
         MealsFragment f = (MealsFragment)getSupportFragmentManager().findFragmentByTag("mealsFragment");
         f.enqueueCreateMeal();
+    }
+
+    @Override
+    public void enqueueUpdateUserDetails(UpdateUserDetailsDTO updateUserDetailsDTO) {
+        UserDetailsFragment f = (UserDetailsFragment)getSupportFragmentManager().findFragmentByTag("userDetailsFragment");
+        f.enqueueUpdateUserDetails(updateUserDetailsDTO);
     }
 }
