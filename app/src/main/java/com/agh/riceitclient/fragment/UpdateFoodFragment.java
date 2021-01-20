@@ -37,7 +37,7 @@ public class UpdateFoodFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_update_food, container, false);
+        View v =  inflater.inflate(R.layout.fragment_meals_update_food, container, false);
 
         nameInput = v.findViewById(R.id.update_food_name);
         kcalInput = v.findViewById(R.id.update_food_kcal);

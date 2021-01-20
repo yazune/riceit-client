@@ -306,11 +306,11 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/btn_yesterday"
+            android:id="@+id/btn_previous_day"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight=".3"
-            android:text="Yesterday"/>
+            android:text="Previous\nDay"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/datebar_today_constraint"
@@ -319,39 +319,26 @@
             android:layout_weight=".3">
 
             <TextView
-                android:id="@+id/datebar_today_date"
+                android:id="@+id/datebar_selected_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(date)"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintVertical_bias=".4"/>
-
-            <TextView
-                android:id="@+id/datebar_today_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(Today)"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintVertical_bias=".7"/>
+                app:layout_constraintVertical_bias=".5"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/btn_tomorrow"
+            android:id="@+id/btn_next_day"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight=".3"
-            android:text="Tomorrow"/>
+            android:text="Next\nDay"/>
 
 
     </LinearLayout>

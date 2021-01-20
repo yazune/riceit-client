@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,13 +74,16 @@ public class UserDetailsUpdateFragment extends Fragment {
         kInput.getEditText().setText(String.valueOf(updateUserDetailsDTO.getK()));
 
         if (updateUserDetailsDTO.getGender().equals("MALE")){
-            maleRadio.toggle();
+            maleRadio.setChecked(true);
+            femaleRadio.setChecked(false);
         } else {
-            femaleRadio.toggle();
+            maleRadio.setChecked(false);
+            femaleRadio.setChecked(true);
         }
     }
 
     public void confirmUpdatingDetails(){
+        UpdateUserDetailsDTO updateUserDetailsDTO = new UpdateUserDetailsDTO();
         String heightStr = heightInput.getEditText().getText().toString().trim();
         String weightStr = weightInput.getEditText().getText().toString().trim();
         String ageStr = ageInput.getEditText().getText().toString().trim();
@@ -90,19 +94,21 @@ public class UserDetailsUpdateFragment extends Fragment {
         int age = Integer.parseInt(ageStr);
         double k = Double.parseDouble(kStr);
 
-        String gender;
 
-        if(genderRadioGroup.getCheckedRadioButtonId() == 0){
-            gender = "MALE";
-        } else {
-            gender = "FEMALE";
+        if (genderRadioGroup.getCheckedRadioButtonId() == -1){
+            Toast.makeText(getActivity(), "Please Select Gender", Toast.LENGTH_SHORT).show();
+        } else if(maleRadio.isChecked()){
+            updateUserDetailsDTO.setGender("MALE");
+        } else{
+            updateUserDetailsDTO.setGender("FEMALE");
         }
+
 
         updateUserDetailsDTO.setHeight(height);
         updateUserDetailsDTO.setWeight(weight);
         updateUserDetailsDTO.setAge(age);
         updateUserDetailsDTO.setK(k);
-        updateUserDetailsDTO.setGender(gender);
+
 
         detailsListener.enqueueUpdateUserDetails(updateUserDetailsDTO);
         hideKeyboard();

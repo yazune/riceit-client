@@ -5,6 +5,7 @@ import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +18,13 @@ import android.os.Bundle;
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.AddFoodDTO;
 import com.agh.riceitclient.dto.UpdateFoodDTO;
+import com.agh.riceitclient.dto.UpdateGoalsDTO;
 import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
+import com.agh.riceitclient.fragment.GoalsFragment;
 import com.agh.riceitclient.fragment.MealsFragment;
 import com.agh.riceitclient.fragment.UserDetailsFragment;
 import com.agh.riceitclient.util.DetailsListener;
+import com.agh.riceitclient.util.GoalsListener;
 import com.agh.riceitclient.util.MealsListener;
 import com.agh.riceitclient.util.DrawerAdapter;
 import com.agh.riceitclient.util.DrawerItem;
@@ -32,7 +36,9 @@ import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener,
-        MealsListener, DetailsListener {
+        MealsListener,
+        DetailsListener,
+        GoalsListener {
 
     private static final int POS_CLOSE = 0;
     private static final int POS_DASHBOARD = 1;
@@ -143,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             transaction.replace(R.id.main_container, userDetailsFragment, "userDetailsFragment");
         }
         else if (position == POS_NEAR) {
-//            RandomFragment randomFragment = new RandomFragment();
-//            transaction.replace(R.id.main_container, randomFragment);
+            GoalsFragment goalsFragment = new GoalsFragment();
+            transaction.replace(R.id.main_container, goalsFragment, "goalsFragment");
         }
         else if (position == POS_SETTINGS) {
 //            RandomFragment randomFragment = new RandomFragment();
@@ -157,6 +163,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         else if (position == POS_LOGOUT) {
             finish();
         }
+
+        popBackStackTillEntry(0);
 
         slidingRootNav.closeMenu();
         transaction.addToBackStack(null);
@@ -191,5 +199,24 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void enqueueUpdateUserDetails(UpdateUserDetailsDTO updateUserDetailsDTO) {
         UserDetailsFragment f = (UserDetailsFragment)getSupportFragmentManager().findFragmentByTag("userDetailsFragment");
         f.enqueueUpdateUserDetails(updateUserDetailsDTO);
+    }
+
+    @Override
+    public void enqueueUpdateGoals(UpdateGoalsDTO updateGoalsDTO) {
+        GoalsFragment f = (GoalsFragment) getSupportFragmentManager().findFragmentByTag("goalsFragment");
+        f.enqueueUpdateGoals(updateGoalsDTO);
+    }
+
+    public void popBackStackTillEntry(int entryIndex){
+        if (getSupportFragmentManager() == null){
+            return;
+        }
+        if (getSupportFragmentManager().getBackStackEntryCount() <= entryIndex){
+            return;
+        }
+        FragmentManager.BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(entryIndex);
+        if (entry != null){
+            getSupportFragmentManager().popBackStackImmediate(entry.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
     }
 }

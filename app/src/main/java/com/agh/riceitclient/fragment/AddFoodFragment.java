@@ -17,8 +17,6 @@ import com.agh.riceitclient.dto.AddFoodDTO;
 import com.agh.riceitclient.util.MealsListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 public class AddFoodFragment extends Fragment {
 
     long mealId;
@@ -33,7 +31,7 @@ public class AddFoodFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_add_food, container, false);
+        View v =  inflater.inflate(R.layout.fragment_meals_add_food, container, false);
 
         nameInput = v.findViewById(R.id.add_food_name);
         kcalInput = v.findViewById(R.id.add_food_kcal);

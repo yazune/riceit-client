@@ -49,11 +49,13 @@ public class MealsFragment extends Fragment implements MealsListener{
     MealService mealService = ServiceGenerator.createService(MealService.class);
     DayService dayService = ServiceGenerator.createService(DayService.class);
 
-    TextView todayDate;
+    TextView selectedDate;
     ProgressBar kcalBar, protBar, fatBar, carbBar;
     TextView kcalEaten, kcalBurnt, kcalTotal, kcalDaily;
     TextView protEaten, protDaily, fatEaten, fatDaily, carbEaten, carbDaily;
 
+
+    final LocalDate finalToday = LocalDate.now();
     LocalDate today;
     HashMap<LocalDate, ArrayList<Meal>> mealsMap;
     HashMap<LocalDate, Day> summaryMap;
@@ -70,7 +72,7 @@ public class MealsFragment extends Fragment implements MealsListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_meals, container, false);
 
-        todayDate = v.findViewById(R.id.datebar_today_date);
+        selectedDate = v.findViewById(R.id.datebar_selected_date);
 
         kcalBar = v.findViewById(R.id.kcal_bar);
         protBar = v.findViewById(R.id.prot_bar);
@@ -89,8 +91,8 @@ public class MealsFragment extends Fragment implements MealsListener{
         carbEaten = v.findViewById(R.id.carb_amount);
         carbDaily = v.findViewById(R.id.carb_daily);
 
-        prevDayBtn = v.findViewById(R.id.btn_yesterday);
-        nextDayBtn = v.findViewById(R.id.btn_tomorrow);
+        prevDayBtn = v.findViewById(R.id.btn_previous_day);
+        nextDayBtn = v.findViewById(R.id.btn_next_day);
 
         prevDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,8 +184,18 @@ public class MealsFragment extends Fragment implements MealsListener{
     }
 
     private void setDates() {
+
+        if (today.equals(finalToday)){
+            nextDayBtn.setClickable(false);
+            nextDayBtn.setText("");
+        } else{
+            nextDayBtn.setClickable(true);
+            nextDayBtn.setText("Next\nDay");
+        }
+
+
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM");
-        todayDate.setText(today.format(dtf));
+        selectedDate.setText(today.format(dtf));
     }
 
     public void chooseNextDay(View view){

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,7 +76,7 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
             public void onResponse(Call<GetUserDetailsDTO> call, Response<GetUserDetailsDTO> response) {
                 if (response.isSuccessful()){
                     userDetails.fillWithData(response.body());
-                    updateUserDetailsLayout();
+                    updateLayout();
                 }
             }
 
@@ -86,7 +87,7 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
         });
     }
 
-    public void updateUserDetailsLayout(){
+    public void updateLayout(){
         usernameText.setText(userDetails.getUsername());
         emailText.setText(userDetails.getEmail());
         heightAmount.setText(String.valueOf(userDetails.getHeight()));
