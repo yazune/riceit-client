@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/goals_auto_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:elevation="15dp"
+            android:background="@drawable/goals_container_bg"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/goals_auto_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Automatic"
+                android:textSize="25sp"
+                android:textAllCaps="true"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/goals_auto_kcal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kcal:"
+                android:textSize="22sp"
+                android:layout_below="@id/goals_auto_title"/>
+
+            <TextView
+                android:id="@+id/goals_auto_kcal_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_auto_kcal_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/goals_auto_prot_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prot:"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/goals_auto_kcal_text"/>
+
+            <TextView
+                android:id="@+id/goals_auto_prot_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_auto_prot_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/goals_auto_fat_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fat:"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/goals_auto_prot_text"/>
+
+            <TextView
+                android:id="@+id/goals_auto_fat_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_auto_fat_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/goals_auto_carb_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carb:"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/goals_auto_fat_text"/>
+
+            <TextView
+                android:id="@+id/goals_auto_carb_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_auto_carb_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <Button
+                android:id="@+id/btn_goals_auto_set"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set As Default"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_goals_set_bg"
+                android:layout_below="@id/goals_auto_carb_text"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/goals_man_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/goals_container_bg"
+            android:padding="15dp"
+            android:layout_below="@id/goals_auto_container">
+
+            <TextView
+                android:id="@+id/goals_man_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Manual"
+                android:textSize="25sp"
+                android:textAllCaps="true"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/goals_man_kcal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kcal:"
+                android:textSize="22sp"
+                android:layout_below="@id/goals_man_title"/>
+
+            <TextView
+                android:id="@+id/goals_man_kcal_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_man_kcal_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/goals_man_prot_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prot:"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/goals_man_kcal_text"/>
+
+            <TextView
+                android:id="@+id/goals_man_prot_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_man_prot_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/goals_man_fat_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fat:"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/goals_man_prot_text"/>
+
+            <TextView
+                android:id="@+id/goals_man_fat_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_man_fat_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/goals_man_carb_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carb:"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/goals_man_fat_text"/>
+
+            <TextView
+                android:id="@+id/goals_man_carb_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_man_carb_text"
+                android:text="1000"
+                android:textSize="22sp"/>
+
+            <Button
+                android:id="@+id/btn_goals_man_update"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Values"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_goals_update_bg"
+                android:layout_below="@id/goals_man_carb_text"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btn_goals_man_set"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set As Default"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_goals_set_bg"
+                android:layout_below="@id/btn_goals_man_update"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/goals_diet_type_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:elevation="15dp"
+            android:background="@drawable/goals_container_bg"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/goals_diet_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Diet Type"
+                android:textSize="25sp"
+                android:textAllCaps="true"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/goals_man_selected_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selected:"
+                android:textSize="22sp"
+                android:layout_below="@id/goals_diet_type_title"/>
+
+            <TextView
+                android:id="@+id/goals_man_selected_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@id/goals_man_selected_text"
+                android:text="TYPE"
+                android:textSize="22sp"/>
+
+            <Button
+                android:id="@+id/btn_goals_diet_gain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gaining"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_goals_set_bg"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/goals_man_selected_text"/>
+
+            <Button
+                android:id="@+id/btn_goals_diet_maintaining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="maintaining"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_goals_set_bg"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btn_goals_diet_gain"/>
+
+            <Button
+                android:id="@+id/btn_goals_diet_reduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="reduction"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_goals_set_bg"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/btn_goals_diet_maintaining"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

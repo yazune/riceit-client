@@ -2,10 +2,10 @@
 <resources>
     <string-array name="id_activityScreenTitles">
         <item></item>
-        <item>Dashboard</item>
+        <item>Meals</item>
         <item>My Profile</item>
-        <item>Nearby Restaurants</item>
-        <item>Settings</item>
+        <item>Goals</item>
+        <item>Activities</item>
         <item>About Us</item>
         <item/>
         <item>Logout</item>

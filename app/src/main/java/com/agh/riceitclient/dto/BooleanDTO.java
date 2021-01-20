@@ -4,6 +4,10 @@ public class BooleanDTO {
 
     private Boolean bool;
 
+    public BooleanDTO(Boolean bool) {
+        this.bool = bool;
+    }
+
     public Boolean getBool() {
         return bool;
     }
