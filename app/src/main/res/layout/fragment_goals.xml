@@ -14,10 +14,10 @@
             android:id="@+id/goals_auto_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:elevation="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:elevation="10dp"
             android:background="@drawable/goals_container_bg"
             android:padding="15dp">
 
@@ -27,8 +27,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="Automatic"
-                android:textSize="25sp"
-                android:textAllCaps="true"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="20sp"
+                android:textAllCaps="false"
+                android:textColor="#212121"
                 android:layout_marginBottom="10dp"/>
 
             <TextView
@@ -36,7 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kcal:"
-                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textColor="#212121"
                 android:layout_below="@id/goals_auto_title"/>
 
             <TextView
@@ -46,14 +50,18 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_auto_kcal_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/goals_auto_prot_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Prot:"
-                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textColor="#212121"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/goals_auto_kcal_text"/>
 
@@ -64,14 +72,18 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_auto_prot_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/goals_auto_fat_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fat:"
-                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textColor="#212121"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/goals_auto_prot_text"/>
 
@@ -82,14 +94,18 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_auto_fat_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/goals_auto_carb_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Carb:"
-                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textColor="#212121"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/goals_auto_fat_text"/>
 
@@ -100,7 +116,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_auto_carb_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <Button
                 android:id="@+id/btn_goals_auto_set"
@@ -119,10 +137,10 @@
             android:id="@+id/goals_man_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:elevation="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/goals_container_bg"
             android:padding="15dp"
             android:layout_below="@id/goals_auto_container">
@@ -133,8 +151,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="Manual"
-                android:textSize="25sp"
-                android:textAllCaps="true"
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="20sp"
+                android:textAllCaps="false"
                 android:layout_marginBottom="10dp"/>
 
             <TextView
@@ -142,7 +162,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kcal:"
-                android:textSize="22sp"
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
                 android:layout_below="@id/goals_man_title"/>
 
             <TextView
@@ -152,14 +174,18 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_man_kcal_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/goals_man_prot_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Prot:"
-                android:textSize="22sp"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textColor="#212121"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/goals_man_kcal_text"/>
 
@@ -170,14 +196,18 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_man_prot_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/goals_man_fat_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fat:"
-                android:textSize="22sp"
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/goals_man_prot_text"/>
 
@@ -188,14 +218,18 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_man_fat_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/goals_man_carb_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Carb:"
-                android:textSize="22sp"
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/goals_man_fat_text"/>
 
@@ -206,28 +240,20 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/goals_man_carb_text"
                 android:text="1000"
-                android:textSize="22sp"/>
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"/>
 
             <Button
                 android:id="@+id/btn_goals_man_update"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Update Values"
+                android:text="Update"
+                android:fontFamily="@font/roboto_medium"
                 android:textColor="@color/white"
                 android:background="@drawable/btn_goals_update_bg"
                 android:layout_below="@id/goals_man_carb_text"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/btn_goals_man_set"
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Set As Default"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_goals_set_bg"
-                android:layout_below="@id/btn_goals_man_update"
                 android:visibility="visible" />
 
         </RelativeLayout>
@@ -236,69 +262,136 @@
             android:id="@+id/goals_diet_type_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:elevation="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="300dp"
+            android:elevation="10dp"
             android:background="@drawable/goals_container_bg"
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/goals_diet_type_title"
+                android:id="@+id/text_use_k"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Diet Type"
-                android:textSize="25sp"
-                android:textAllCaps="true"
-                android:layout_marginBottom="10dp"/>
+                android:text="Use K Parameter"
+                android:textColor="#212121"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/goals_man_selected_text"
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_use_k"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Selected:"
-                android:textSize="22sp"
-                android:layout_below="@id/goals_diet_type_title"/>
+                android:layout_alignParentRight="true"/>
 
             <TextView
-                android:id="@+id/goals_man_selected_type"
+                android:id="@+id/text_use_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Use Manual Parameters"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textColor="#212121"
+                android:layout_marginTop="14sp"
+                android:layout_below="@id/text_use_k"/>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_use_man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@id/goals_man_selected_text"
-                android:text="TYPE"
-                android:textSize="22sp"/>
+                android:layout_alignBaseline="@id/text_use_man"/>
 
-            <Button
-                android:id="@+id/btn_goals_diet_gain"
+            <TextView
+                android:id="@+id/text_diet_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diet Type"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp"
+                android:textColor="#212121"
+                android:layout_marginTop="14dp"
+                android:layout_below="@id/text_use_man"/>
+
+            <RadioGroup
+                android:id="@+id/radio_group_diet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gaining"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_goals_set_bg"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/goals_man_selected_text"/>
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/text_diet_type">
+                <RadioButton
+                    android:id="@+id/radio_gain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+                    android:background="?android:selectableItemBackground"
+                    android:layoutDirection="rtl"
+                    android:layout_gravity="start"
+                    android:textAlignment="textStart"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Gain"
+                    android:textColor="#212121"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+                    android:background="?android:selectableItemBackground"
+                    android:layoutDirection="rtl"
+                    android:layout_gravity="start"
+                    android:textAlignment="textStart"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Maintaining"
+                    android:textColor="#212121"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_reduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+                    android:background="?android:selectableItemBackground"
+                    android:layoutDirection="rtl"
+                    android:layout_gravity="start"
+                    android:textAlignment="textStart"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Reduction"
+                    android:textColor="#212121"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16sp"/>
+            </RadioGroup>
 
             <Button
-                android:id="@+id/btn_goals_diet_maintaining"
+                android:id="@+id/btn_settings_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="maintaining"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/radio_group_diet"
+                android:text="Update"
+                android:fontFamily="@font/roboto_medium"
+                android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:background="@drawable/btn_goals_set_bg"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/btn_goals_diet_gain"/>
+                android:background="@drawable/btn_goals_set_bg"/>
 
-            <Button
-                android:id="@+id/btn_goals_diet_reduction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="reduction"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_goals_set_bg"
-                android:layout_marginTop="5dp"
-                android:layout_below="@id/btn_goals_diet_maintaining"/>
+
+
 
         </RelativeLayout>
 

@@ -5,7 +5,7 @@ import com.agh.riceitclient.model.Meal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MealsDTO {
+public class AllMealsDTO {
 
     private ArrayList<Meal> meals;
 

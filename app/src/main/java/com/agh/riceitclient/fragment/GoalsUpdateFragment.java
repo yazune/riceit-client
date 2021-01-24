@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
+import com.agh.riceitclient.dto.ManualParametersDTO;
 import com.agh.riceitclient.dto.UpdateGoalsDTO;
 import com.agh.riceitclient.util.GoalsListener;
 import com.google.android.material.textfield.TextInputLayout;
@@ -22,7 +23,8 @@ public class GoalsUpdateFragment extends Fragment {
     GoalsListener goalsListener;
     Button btnConfirm;
     TextInputLayout kcalInput, protInput, fatInput, carbInput;
-    UpdateGoalsDTO updateGoalsDTO;
+
+    ManualParametersDTO dto;
 
     public GoalsUpdateFragment(GoalsListener goalsListener){
         this.goalsListener = goalsListener;
@@ -31,7 +33,7 @@ public class GoalsUpdateFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        updateGoalsDTO = (UpdateGoalsDTO) getArguments().getSerializable("updateGoalsDTO");
+        dto = (ManualParametersDTO) getArguments().getSerializable("manualParametersDTO");
     }
 
     @Nullable
@@ -59,10 +61,10 @@ public class GoalsUpdateFragment extends Fragment {
     }
 
     public void fillFormWithData(){
-        kcalInput.getEditText().setText(String.valueOf(updateGoalsDTO.getManKcal()));
-        protInput.getEditText().setText(String.valueOf(updateGoalsDTO.getManProtein()));
-        fatInput.getEditText().setText(String.valueOf(updateGoalsDTO.getManFat()));
-        carbInput.getEditText().setText(String.valueOf(updateGoalsDTO.getManCarbohydrate()));
+        kcalInput.getEditText().setText(String.valueOf(dto.getKcalMan()));
+        protInput.getEditText().setText(String.valueOf(dto.getProteinMan()));
+        fatInput.getEditText().setText(String.valueOf(dto.getFatMan()));
+        carbInput.getEditText().setText(String.valueOf(dto.getCarbohydrateMan()));
     }
 
     public void confirmUpdatingGoals(){
@@ -78,12 +80,12 @@ public class GoalsUpdateFragment extends Fragment {
         double fat = Double.parseDouble(fatStr);
         double carb = Double.parseDouble(carbStr);
 
-        updateGoalsDTO.setManKcal(kcal);
-        updateGoalsDTO.setManProtein(prot);
-        updateGoalsDTO.setManFat(fat);
-        updateGoalsDTO.setManCarbohydrate(carb);
+        dto.setKcalMan(kcal);
+        dto.setProteinMan(prot);
+        dto.setFatMan(fat);
+        dto.setCarbohydrateMan(carb);
 
-        goalsListener.enqueueUpdateGoals(updateGoalsDTO);
+        goalsListener.enqueueUpdateManualParameters(dto);
         hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
     }

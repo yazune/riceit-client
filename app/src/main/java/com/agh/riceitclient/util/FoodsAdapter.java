@@ -22,6 +22,9 @@ import com.agh.riceitclient.fragment.DecideFragment;
 import com.agh.riceitclient.fragment.UpdateFoodFragment;
 import com.agh.riceitclient.model.Food;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemViewHolder> {
@@ -43,6 +46,7 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
         private TextView kcalAmount, protAmount, fatAmount, carboAmount;
         private Button addFoodBtn;
         private ImageView removeFoodBtn;
+        private View line;
 
         public SubItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,6 +57,7 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
             carboAmount = itemView.findViewById(R.id.food_carb_amount);
             addFoodBtn = itemView.findViewById(R.id.create_food_button);
             removeFoodBtn = itemView.findViewById(R.id.food_remove_button);
+            line = itemView.findViewById(R.id.food_line);
         }
     }
 
@@ -86,11 +91,22 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
 
         if (position != foods.size()){
             Food food = foods.get(position);
+
+            NumberFormat df = DecimalFormat.getInstance();
+            df.setMinimumFractionDigits(2);
+            df.setMaximumFractionDigits(2);
+            df.setRoundingMode(RoundingMode.DOWN);
+
             holder.foodName.setText(food.getName());
-            holder.kcalAmount.setText(Double.toString(food.getKcal()));
-            holder.protAmount.setText(Double.toString(food.getProtein()));
-            holder.fatAmount.setText(Double.toString(food.getFat()));
-            holder.carboAmount.setText(Double.toString(food.getCarbohydrate()));
+            holder.kcalAmount.setText(df.format(food.getKcal()));
+            holder.protAmount.setText(df.format(food.getProtein()));
+            holder.fatAmount.setText(df.format(food.getFat()));
+            holder.carboAmount.setText(df.format(food.getCarbohydrate()));
+
+            if (position == (foods.size() - 1))
+                holder.line.setVisibility(View.INVISIBLE);
+            else
+                holder.line.setVisibility(View.VISIBLE);
 
             holder.removeFoodBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

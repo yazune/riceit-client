@@ -13,279 +13,753 @@
         android:id="@+id/meals_summary_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:background="@drawable/summary_bg">
 
         <ProgressBar
             android:id="@+id/kcal_bar"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:scaleY="3"
+            android:scaleY="2"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:indeterminate="false"
+            android:elevation="5dp"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
-        <TextView
-            android:id="@+id/kcal_eaten_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1000"
-            android:layout_below="@id/kcal_bar"
-            android:layout_toStartOf="@id/dash_sign"/>
-
-        <TextView
-            android:id="@+id/dash_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-"
-            android:layout_marginLeft="20dp"
-            android:layout_below="@id/kcal_bar"
-            android:layout_toStartOf="@id/kcal_burnt_amount"/>
-
-        <TextView
-            android:id="@+id/kcal_burnt_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1000"
-            android:layout_marginLeft="20dp"
-            android:layout_below="@id/kcal_bar"
-            android:layout_toStartOf="@id/equals_sign"/>
-
-        <TextView
-            android:id="@+id/equals_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="="
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_below="@id/kcal_bar"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:id="@+id/kcal_total_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="1000"
-            android:layout_marginRight="20dp"
-            android:layout_below="@id/kcal_bar"
-            android:layout_toEndOf="@id/equals_sign"/>
-
-        <TextView
-            android:id="@+id/slash_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="/"
-            android:layout_marginRight="20dp"
-            android:layout_below="@id/kcal_bar"
-            android:layout_toEndOf="@id/kcal_total_amount"/>
-
-        <TextView
-            android:id="@+id/kcal_daily_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="1000"
-            android:layout_below="@id/kcal_bar"
-            android:layout_toEndOf="@id/slash_sign"/>
-
-        <TextView
-            android:id="@+id/kcal_eaten_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="eaten"
-            android:textSize="10sp"
-            android:layout_below="@id/kcal_eaten_amount"
-            android:layout_alignEnd="@id/kcal_eaten_amount"/>
-
-        <TextView
-            android:id="@+id/kcal_burnt_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="burnt"
-            android:textSize="10sp"
-            android:layout_below="@id/kcal_burnt_amount"
-            android:layout_alignEnd="@id/kcal_burnt_amount"/>
-
-        <TextView
-            android:id="@+id/kcal_total_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="total"
-            android:textSize="10sp"
-            android:layout_below="@id/kcal_total_amount"
-            android:layout_alignEnd="@id/kcal_total_amount"/>
-
-        <TextView
-            android:id="@+id/kcal_daily_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:text="daily"
-            android:textSize="10sp"
-            android:layout_below="@id/kcal_daily_amount"
-            android:layout_alignEnd="@id/kcal_daily_amount"/>
-
         <LinearLayout
-            android:id="@+id/bars_linear"
+            android:id="@+id/kcal_linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:translationY="-2dp"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/kcal_eaten_text"
-            android:layout_alignStart="@id/kcal_bar"
-            android:layout_alignEnd="@id/kcal_bar">
+            android:gravity="center_horizontal"
+            android:layout_below="@id/kcal_bar">
 
-            <ProgressBar
-                android:id="@+id/prot_bar"
+            <LinearLayout
+                android:id="@+id/kcal_left_linear"
+                android:layout_width="54dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="9dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/kcal_eaten_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="#212121"
+                    android:text="1000.00"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/kcal_eaten_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="#212121"
+                    android:text="eaten"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/kcal_middle_linear"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/kcal_minus_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="-"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/kcal_burnt_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/kcal_burnt_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#212121"
+                        android:text="1000.00"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/kcal_burnt_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="burnt"
+                        android:textColor="#212121"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/kcal_equals_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="="
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/kcal_total_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/kcal_total_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textColor="#212121"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/kcal_total_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="total"
+                        android:textColor="#212121"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/kcal_right_linear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:scaleY="3"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-            <ProgressBar
-                android:id="@+id/fat_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:scaleY="3"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-            <ProgressBar
-                android:id="@+id/carb_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:scaleY="3"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/kcal_slash_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="/"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/kcal_daily_linear"
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/kcal_daily_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textColor="#212121"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/kcal_daily_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="daily"
+                        android:textColor="#212121"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/prot_bar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:scaleY="2"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:indeterminate="false"
+            android:elevation="5dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@id/kcal_linear"/>
 
         <LinearLayout
             android:id="@+id/prot_linear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bars_linear"
-            android:layout_alignStart="@id/bars_linear"
-            android:layout_marginStart="15dp">
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:translationY="-2dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/prot_bar">
 
-            <TextView
-                android:id="@+id/prot_amount"
+            <LinearLayout
+                android:id="@+id/prot_left_linear"
+                android:layout_width="54dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="9dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/prot_eaten_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="1000.00"
+                    android:textSize="12sp"
+                    android:textColor="#212121"/>
+
+                <TextView
+                    android:id="@+id/prot_eaten_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="eaten"
+                    android:textSize="12sp"
+                    android:textColor="#212121"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/prot_middle_linear"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/prot_minus_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="-"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/prot_burnt_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/prot_burnt_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/prot_burnt_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="burnt"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/prot_equals_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="="
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/prot_total_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/prot_total_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/prot_total_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="total"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/prot_right_linear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="10.0"/>
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="/" />
+                <TextView
+                    android:id="@+id/prot_slash_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="/"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
 
-            <TextView
-                android:id="@+id/prot_daily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="10.0"/>
+                <LinearLayout
+                    android:id="@+id/prot_daily_linear"
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/prot_daily_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/prot_daily_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="daily"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/fat_bar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:scaleY="2"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:elevation="5dp"
+            android:indeterminate="false"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@id/prot_linear"/>
 
         <LinearLayout
             android:id="@+id/fat_linear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bars_linear"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:translationY="-2dp"
             android:orientation="horizontal"
-            android:layout_centerHorizontal="true">
+            android:gravity="center_horizontal"
+            android:layout_below="@id/fat_bar">
 
-            <TextView
-                android:id="@+id/fat_amount"
+            <LinearLayout
+                android:id="@+id/fat_left_linear"
+                android:layout_width="54dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="9dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/fat_eaten_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="1000.00"
+                    android:textSize="12sp"
+                    android:textColor="#212121"/>
+
+                <TextView
+                    android:id="@+id/fat_eaten_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="eaten"
+                    android:textSize="12sp"
+                    android:textColor="#212121"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fat_middle_linear"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/fat_minus_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="-"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/fat_burnt_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/fat_burnt_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/fat_burnt_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="burnt"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/fat_equals_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="="
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/fat_total_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/fat_total_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/fat_total_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="total"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fat_right_linear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="10.0"/>
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="/" />
+                <TextView
+                    android:id="@+id/fat_slash_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/roboto"/>
 
-            <TextView
-                android:id="@+id/fat_daily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="10.0"/>
+                <LinearLayout
+                    android:id="@+id/fat_daily_linear"
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/fat_daily_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/fat_daily_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="daily"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/carb_bar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:scaleY="2"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:indeterminate="false"
+            android:elevation="5dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@id/fat_linear"/>
 
         <LinearLayout
             android:id="@+id/carb_linear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bars_linear"
-            android:layout_alignEnd="@id/bars_linear"
-            android:layout_marginEnd="15dp">
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:translationY="-2dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/carb_bar">
 
-            <TextView
-                android:id="@+id/carb_amount"
+            <LinearLayout
+                android:id="@+id/carb_left_linear"
+                android:layout_width="54dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="9dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/carb_eaten_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="1000.00"
+                    android:textSize="12sp"
+                    android:textColor="#212121"/>
+
+                <TextView
+                    android:id="@+id/carb_eaten_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="eaten"
+                    android:textSize="12sp"
+                    android:textColor="#212121"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/carb_middle_linear"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/carb_minus_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="-"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/carb_burnt_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/carb_burnt_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/carb_burnt_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="burnt"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/carb_equals_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="="
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/carb_total_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/carb_total_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/carb_total_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="total"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/carb_right_linear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="10.0"/>
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="/" />
+                <TextView
+                    android:id="@+id/slash_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="/"
+                    android:textColor="#212121"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_vertical"/>
 
-            <TextView
-                android:id="@+id/carb_daily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="10.0"/>
+                <LinearLayout
+                    android:id="@+id/carb_daily_linear"
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/carb_daily_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="1000.00"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/carb_daily_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="daily"
+                        android:textSize="12sp"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/prot_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="prots"
-            android:layout_below="@id/prot_linear"
-            android:layout_alignStart="@id/prot_linear"
-            android:layout_marginStart="24dp"/>
-
-        <TextView
-            android:id="@+id/fat_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="fats"
-            android:layout_below="@id/fat_linear"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:id="@+id/carb_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="carbs"
-            android:layout_below="@id/carb_linear"
-            android:layout_alignEnd="@id/carb_linear"
-            android:layout_marginEnd="20dp"/>
-
 
     </RelativeLayout>
 
@@ -294,15 +768,19 @@
         android:elevation="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/meals_summary_tab"
         android:layout_above="@id/meals_days_linear"/>
 
     <LinearLayout
         android:id="@+id/meals_days_linear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:orientation="horizontal"
+        android:background="#FFFFFFFF"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="4dp"
         android:layout_alignParentBottom="true">
 
         <Button
@@ -310,12 +788,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight=".3"
-            android:text="Previous\nDay"/>
+            android:background="@drawable/btn_green"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/white"
+            android:text="Previous Day"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/datebar_today_constraint"
             android:layout_width="100dp"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:layout_weight=".3">
 
             <TextView
@@ -323,7 +805,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(date)"
-                android:textSize="20sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="#212121"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -338,7 +822,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight=".3"
-            android:text="Next\nDay"/>
+            android:background="@drawable/btn_green"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:text="Next Day"/>
 
 
     </LinearLayout>

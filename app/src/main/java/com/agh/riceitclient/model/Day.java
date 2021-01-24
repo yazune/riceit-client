@@ -16,6 +16,19 @@ public class Day {
     private double carbohydrateConsumed;
 
     private double kcalBurnt;
+    private double proteinBurnt;
+    private double fatBurnt;
+    private double carbohydrateBurnt;
+
+    private boolean useK;
+
+    public boolean isUseK() {
+        return useK;
+    }
+
+    public void setUseK(boolean useK) {
+        this.useK = useK;
+    }
 
     public long getId() {
         return id;
@@ -103,5 +116,29 @@ public class Day {
 
     public void setKcalBurnt(double kcalBurnt) {
         this.kcalBurnt = kcalBurnt;
+    }
+
+    public double getProteinBurnt() {
+        return proteinBurnt;
+    }
+
+    public void setProteinBurnt(double proteinBurnt) {
+        this.proteinBurnt = proteinBurnt;
+    }
+
+    public double getFatBurnt() {
+        return fatBurnt;
+    }
+
+    public void setFatBurnt(double fatBurnt) {
+        this.fatBurnt = fatBurnt;
+    }
+
+    public double getCarbohydrateBurnt() {
+        return carbohydrateBurnt;
+    }
+
+    public void setCarbohydrateBurnt(double carbohydrateBurnt) {
+        this.carbohydrateBurnt = carbohydrateBurnt;
     }
 }

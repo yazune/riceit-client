@@ -17,11 +17,14 @@ import android.os.Bundle;
 
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.AddFoodDTO;
+import com.agh.riceitclient.dto.AddSportManDTO;
+import com.agh.riceitclient.dto.ManualParametersDTO;
 import com.agh.riceitclient.dto.UpdateFoodDTO;
 import com.agh.riceitclient.dto.UpdateGoalsDTO;
 import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
 import com.agh.riceitclient.fragment.GoalsFragment;
 import com.agh.riceitclient.fragment.MealsFragment;
+import com.agh.riceitclient.fragment.SportsFragment;
 import com.agh.riceitclient.fragment.UserDetailsFragment;
 import com.agh.riceitclient.util.DetailsListener;
 import com.agh.riceitclient.util.GoalsListener;
@@ -30,6 +33,7 @@ import com.agh.riceitclient.util.DrawerAdapter;
 import com.agh.riceitclient.util.DrawerItem;
 import com.agh.riceitclient.util.SimpleItem;
 import com.agh.riceitclient.util.SpaceItem;
+import com.agh.riceitclient.util.SportsListener;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -38,7 +42,8 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener,
         MealsListener,
         DetailsListener,
-        GoalsListener {
+        SportsListener,
+        GoalsListener{
 
     private static final int POS_CLOSE = 0;
     private static final int POS_DASHBOARD = 1;
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
 
-        adapter.setSelected(POS_DASHBOARD);
+        adapter.setSelected(POS_NEAR);
     }
 
     private DrawerItem createItemFor(int position){
@@ -135,6 +140,19 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         }
     }
 
+    public void popBackStackTillEntry(int entryIndex){
+        if (getSupportFragmentManager() == null){
+            return;
+        }
+        if (getSupportFragmentManager().getBackStackEntryCount() <= entryIndex){
+            return;
+        }
+        FragmentManager.BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(entryIndex);
+        if (entry != null){
+            getSupportFragmentManager().popBackStackImmediate(entry.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
     @SuppressLint("ResourceType")
     @Override
     public void onItemSelected(int position) {
@@ -153,8 +171,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             transaction.replace(R.id.main_container, goalsFragment, "goalsFragment");
         }
         else if (position == POS_SETTINGS) {
-//            RandomFragment randomFragment = new RandomFragment();
-//            transaction.replace(R.id.main_container, randomFragment);
+//            SportsFragment sportsFragment = new SportsFragment();
+//            transaction.replace(R.id.main_container, sportsFragment, "sportsFragment");
         }
         else if (position == POS_ABOUT_US) {
 //            RandomFragment randomFragment = new RandomFragment();
@@ -202,21 +220,14 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     @Override
-    public void enqueueUpdateGoals(UpdateGoalsDTO updateGoalsDTO) {
-        GoalsFragment f = (GoalsFragment) getSupportFragmentManager().findFragmentByTag("goalsFragment");
-        f.enqueueUpdateGoals(updateGoalsDTO);
+    public void enqueueAddSportManually(AddSportManDTO addSportManDTO) {
+        SportsFragment f = (SportsFragment) getSupportFragmentManager().findFragmentByTag("sportsFragment");
+        f.enqueueAddSportManually(addSportManDTO);
     }
 
-    public void popBackStackTillEntry(int entryIndex){
-        if (getSupportFragmentManager() == null){
-            return;
-        }
-        if (getSupportFragmentManager().getBackStackEntryCount() <= entryIndex){
-            return;
-        }
-        FragmentManager.BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(entryIndex);
-        if (entry != null){
-            getSupportFragmentManager().popBackStackImmediate(entry.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
+    @Override
+    public void enqueueUpdateManualParameters(ManualParametersDTO manualParametersDTO) {
+        GoalsFragment f = (GoalsFragment) getSupportFragmentManager().findFragmentByTag("goalsFragment");
+        f.enqueueUpdateManualParameters(manualParametersDTO);
     }
 }

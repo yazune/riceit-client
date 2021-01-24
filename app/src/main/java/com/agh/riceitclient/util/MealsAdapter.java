@@ -19,6 +19,9 @@ import com.agh.riceitclient.R;
 import com.agh.riceitclient.fragment.DecideFragment;
 import com.agh.riceitclient.model.Meal;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHolder> {
@@ -79,11 +82,17 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
         if (position != meals.size()){
 
             Meal meal = meals.get(position);
+
+            NumberFormat df = DecimalFormat.getInstance();
+            df.setMinimumFractionDigits(2);
+            df.setMaximumFractionDigits(2);
+            df.setRoundingMode(RoundingMode.DOWN);
+
             holder.mealName.setText("Meal " + (position+1));
-            holder.kcalAmount.setText(Double.toString(meal.getKcal()));
-            holder.protAmount.setText(Double.toString(meal.getProtein()));
-            holder.fatAmount.setText(Double.toString(meal.getFat()));
-            holder.carboAmount.setText(Double.toString(meal.getCarbohydrate()));
+            holder.kcalAmount.setText(df.format(meal.getKcal()));
+            holder.protAmount.setText(df.format(meal.getProtein()));
+            holder.fatAmount.setText(df.format(meal.getFat()));
+            holder.carboAmount.setText(df.format(meal.getCarbohydrate()));
 
             holder.foodsRv.setVisibility(meal.isExpanded()? View.VISIBLE : View.GONE);
             holder.itemView.setOnClickListener(new View.OnClickListener() {

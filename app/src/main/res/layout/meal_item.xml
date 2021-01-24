@@ -33,12 +33,12 @@
                 android:id="@+id/meal_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:text="Name"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:fontFamily="sans-serif-black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,100 +48,104 @@
                 android:id="@+id/meal_kcal_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kcal: "
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/roboto"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/meal_name"
-                app:layout_constraintStart_toStartOf="@id/meal_name" />
+                android:text="Kcal: "
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/meal_name"
+                app:layout_constraintTop_toBottomOf="@id/meal_name" />
+
             <TextView
                 android:id="@+id/meal_kcal_amount"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="(kcal)"
-                android:textSize="16sp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="1000.00"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-black"
-                app:layout_constraintStart_toEndOf="@id/meal_kcal_text"
-                app:layout_constraintBottom_toBottomOf="@id/meal_kcal_text"/>
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/meal_kcal_text"
+                app:layout_constraintStart_toEndOf="@id/meal_kcal_text" />
 
             <TextView
                 android:id="@+id/meal_prot_text"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
+                android:fontFamily="@font/roboto"
+                android:layout_marginLeft="5dp"
                 android:text="P: "
-                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-medium"
-                android:paddingLeft="25dp"
-                app:layout_constraintStart_toEndOf="@id/meal_kcal_amount"
-                app:layout_constraintBottom_toBottomOf="@id/meal_kcal_amount" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/meal_kcal_amount"
+                app:layout_constraintStart_toEndOf="@id/meal_kcal_amount" />
+
             <TextView
                 android:id="@+id/meal_prot_amount"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="(prot)"
-                android:textSize="16sp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="100.00"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-black"
-                app:layout_constraintStart_toEndOf="@id/meal_prot_text"
-                app:layout_constraintBottom_toBottomOf="@id/meal_prot_text" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/meal_prot_text"
+                app:layout_constraintStart_toEndOf="@id/meal_prot_text" />
 
             <TextView
                 android:id="@+id/meal_fat_text"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
+                android:fontFamily="@font/roboto"
                 android:text="F: "
-                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-medium"
-                android:paddingLeft="25dp"
-                app:layout_constraintStart_toEndOf="@id/meal_prot_amount"
-                app:layout_constraintBottom_toBottomOf="@id/meal_prot_amount" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/meal_prot_amount"
+                app:layout_constraintStart_toEndOf="@id/meal_prot_amount" />
+
             <TextView
                 android:id="@+id/meal_fat_amount"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="(fat)"
-                android:textSize="16sp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="100.00"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-black"
-                app:layout_constraintStart_toEndOf="@id/meal_fat_text"
-                app:layout_constraintBottom_toBottomOf="@id/meal_fat_text" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/meal_fat_text"
+                app:layout_constraintStart_toEndOf="@id/meal_fat_text" />
 
             <TextView
                 android:id="@+id/meal_carb_text"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
+                android:fontFamily="@font/roboto"
                 android:text="C: "
-                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-medium"
-                android:paddingLeft="25dp"
-                app:layout_constraintStart_toEndOf="@id/meal_fat_amount"
-                app:layout_constraintBottom_toBottomOf="@id/meal_fat_amount" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/meal_fat_amount"
+                app:layout_constraintStart_toEndOf="@id/meal_fat_amount" />
 
             <TextView
                 android:id="@+id/meal_carb_amount"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="(carb)"
+                android:fontFamily="@font/roboto_medium"
+                android:text="100.00"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/meal_carb_text"
                 app:layout_constraintStart_toEndOf="@id/meal_carb_text" />
 
             <ImageView
                 android:id="@+id/meal_remove_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_cross_white_bold"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/icon_cross_white"
                 android:layout_marginRight="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_bias=".3"
+                app:layout_constraintVertical_bias=".28"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

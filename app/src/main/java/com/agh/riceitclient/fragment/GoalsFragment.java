@@ -7,7 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,17 +22,24 @@ import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.BooleanDTO;
 import com.agh.riceitclient.dto.DietTypeDTO;
 import com.agh.riceitclient.dto.GetGoalDTO;
+import com.agh.riceitclient.dto.ManualParametersDTO;
 import com.agh.riceitclient.dto.UpdateGoalsDTO;
 import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
+import com.agh.riceitclient.dto.UserSettingsDTO;
+import com.agh.riceitclient.model.Day;
 import com.agh.riceitclient.model.Goal;
+import com.agh.riceitclient.model.UserSettings;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
-import com.agh.riceitclient.service.GoalsService;
-import com.agh.riceitclient.service.UserDetailsService;
+import com.agh.riceitclient.service.DayService;
+import com.agh.riceitclient.service.ManualParametersService;
+import com.agh.riceitclient.service.UserSettingsService;
 import com.agh.riceitclient.util.DetailsListener;
 import com.agh.riceitclient.util.GoalsListener;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,102 +48,82 @@ import retrofit2.Response;
 public class GoalsFragment extends Fragment implements GoalsListener {
 
     String authToken;
-    GoalsService goalsService = ServiceGenerator.createService(GoalsService.class);
+    ManualParametersService manualParametersService = ServiceGenerator.createService(ManualParametersService.class);
+    UserSettingsService userSettingsService = ServiceGenerator.createService(UserSettingsService.class);
+    DayService dayService = ServiceGenerator.createService(DayService.class);
 
-    Button btnAutoSet, btnManSet, btnManUpdate, btnGainSet, btnMaintainingSet, btnReductionSet;
+    RelativeLayout autoContainer, manContainer;
     TextView autoKcal, autoProt, autoFat, autoCarb;
     TextView manKcal, manProt, manFat, manCarb;
-    TextView dietType;
 
-    Goal goal;
+    Button btnUpdateMan, btnUpdateSettings;
+    RadioButton gainRadio, mainRadio, reductionRadio;
+    CheckBox kCheck, manCheck;
+
+    Day day = new Day();
+    UserSettings userSettings = new UserSettings();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_goals, container, false);
 
+        autoContainer = v.findViewById(R.id.goals_auto_container);
         autoKcal = v.findViewById(R.id.goals_auto_kcal_amount);
         autoProt = v.findViewById(R.id.goals_auto_prot_amount);
         autoFat = v.findViewById(R.id.goals_auto_fat_amount);
         autoCarb = v.findViewById(R.id.goals_auto_carb_amount);
 
+        manContainer = v.findViewById(R.id.goals_man_container);
         manKcal = v.findViewById(R.id.goals_man_kcal_amount);
         manProt = v.findViewById(R.id.goals_man_prot_amount);
         manFat = v.findViewById(R.id.goals_man_fat_amount);
         manCarb = v.findViewById(R.id.goals_man_carb_amount);
+        btnUpdateMan = v.findViewById(R.id.btn_goals_man_update);
 
-        dietType = v.findViewById(R.id.goals_man_selected_type);
+        gainRadio = v.findViewById(R.id.radio_gain);
+        mainRadio = v.findViewById(R.id.radio_main);
+        reductionRadio = v.findViewById(R.id.radio_reduction);
 
-        btnAutoSet = v.findViewById(R.id.btn_goals_auto_set);
-        btnManSet = v.findViewById(R.id.btn_goals_man_set);
-        btnManUpdate = v.findViewById(R.id.btn_goals_man_update);
+        kCheck = v.findViewById(R.id.check_use_k);
+        manCheck = v.findViewById(R.id.check_use_man);
+        btnUpdateSettings = v.findViewById(R.id.btn_settings_update);
 
-        btnGainSet = v.findViewById(R.id.btn_goals_diet_gain);
-        btnMaintainingSet = v.findViewById(R.id.btn_goals_diet_maintaining);
-        btnReductionSet = v.findViewById(R.id.btn_goals_diet_reduction);
-
-
-        btnAutoSet.setOnClickListener(new View.OnClickListener() {
+        btnUpdateSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enqueueChooseManualOptions(false);
+                enqueueUpdateUserSettings();
             }
         });
 
-        btnManSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enqueueChooseManualOptions(true);
-            }
-        });
-
-        btnManUpdate.setOnClickListener(new View.OnClickListener() {
+        btnUpdateMan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGoalsUpdateFragment();
             }
         });
 
-        btnGainSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enqueueChooseDietType("GAIN");
-            }
-        });
-
-        btnMaintainingSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enqueueChooseDietType("MAINTAINING");
-            }
-        });
-
-        btnReductionSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enqueueChooseDietType("REDUCTION");
-            }
-        });
-
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RiceItClient", Context.MODE_PRIVATE);
         authToken = sharedPreferences.getString("TOKEN", null); //second parameter is default
 
-        goal = new Goal();
-
-        enqueueGetGoals();
+        enqueueGetLastDay();
 
         return v;
     }
 
     public void openGoalsUpdateFragment(){
         Fragment goalsUpdateFragment = new GoalsUpdateFragment((GoalsListener) getActivity());
-        UpdateGoalsDTO updateGoalsDTO = new UpdateGoalsDTO();
-        updateGoalsDTO.fillWithData(goal);
+        ManualParametersDTO manualParametersDTO = new ManualParametersDTO(
+                day.getKcalToEat(),
+                day.getProteinToEat(),
+                day.getFatToEat(),
+                day.getCarbohydrateToEat()
+        );
 
         Bundle args = new Bundle();
-
-        args.putSerializable("updateGoalsDTO", updateGoalsDTO);
+        args.putSerializable("manualParametersDTO", manualParametersDTO);
         goalsUpdateFragment.setArguments(args);
+
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.main_container, goalsUpdateFragment, "goalsUpdateFragment")
@@ -139,123 +131,142 @@ public class GoalsFragment extends Fragment implements GoalsListener {
                 .commit();
     }
 
-    public void enqueueGetGoals(){
-        Call<GetGoalDTO> call = goalsService.getGoal(authToken);
-        call.enqueue(new Callback<GetGoalDTO>() {
+    public void enqueueUpdateUserSettings(){
+
+        String dietType;
+
+        if(gainRadio.isChecked()){
+            dietType = "GAIN";
+        } else if(mainRadio.isChecked()){
+            dietType = "MAINTAINING";
+        } else if(reductionRadio.isChecked()){
+            dietType = "REDUCTION";
+        } else {
+            dietType = userSettings.getDietType();
+        }
+
+        UserSettingsDTO userSettingsDTO = new UserSettingsDTO(
+                kCheck.isChecked(),
+                manCheck.isChecked(),
+                dietType
+        );
+
+        Call<Void> call = userSettingsService.updateUserSettings(authToken, userSettingsDTO);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<GetGoalDTO> call, Response<GetGoalDTO> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()){
-                    goal.fillWithData(response.body());
-                    updateLayout();
+                    enqueueGetLastDay();
                 }
             }
 
             @Override
-            public void onFailure(Call<GetGoalDTO> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
 
             }
         });
     }
 
-    public void updateLayout(){
-        if(goal.areManParamsInUse()){
-            btnAutoSet.setVisibility(View.VISIBLE);
-            btnManSet.setVisibility(View.GONE);
-        } else {
-            btnAutoSet.setVisibility(View.GONE);
-            btnManSet.setVisibility(View.VISIBLE);
-        }
+    public void enqueueGetLastDay(){
+        Call<Day> call = dayService.getLastDay(authToken);
+        call.enqueue(new Callback<Day>() {
+            @Override
+            public void onResponse(Call<Day> call, Response<Day> response) {
+                if (response.isSuccessful()){
+                    day = response.body();
+                    enqueueGetSettings();
+                }
+            }
 
-        if(goal.getDietType().equals("GAIN")){
-            btnGainSet.setClickable(false);
-            btnGainSet.setText("");
-            btnMaintainingSet.setClickable(true);
-            btnMaintainingSet.setText("MAINTAINING");
-            btnReductionSet.setClickable(true);
-            btnReductionSet.setText("REDUCTION");
-        } else if(goal.getDietType().equals("MAINTAINING")){
-            btnGainSet.setClickable(true);
-            btnGainSet.setText("GAIN");
-            btnMaintainingSet.setClickable(false);
-            btnMaintainingSet.setText("");
-            btnReductionSet.setClickable(true);
-            btnReductionSet.setText("REDUCTION");
-        } else {
-            btnGainSet.setClickable(true);
-            btnGainSet.setText("GAIN");
-            btnMaintainingSet.setClickable(true);
-            btnMaintainingSet.setText("MAINTAINING");
-            btnReductionSet.setClickable(false);
-            btnReductionSet.setText("");
-        }
+            @Override
+            public void onFailure(Call<Day> call, Throwable t) {
 
-        autoKcal.setText(String.valueOf(round(goal.getAutoKcal())));
-        autoProt.setText(String.valueOf(round(goal.getAutoProtein())));
-        autoFat.setText(String.valueOf(round(goal.getAutoFat())));
-        autoCarb.setText(String.valueOf(round(goal.getAutoCarbohydrate())));
-
-        manKcal.setText(String.valueOf(round(goal.getManKcal())));
-        manProt.setText(String.valueOf(round(goal.getManProtein())));
-        manFat.setText(String.valueOf(round(goal.getManFat())));
-        manCarb.setText(String.valueOf(round(goal.getManCarbohydrate())));
-
-
+            }
+        });
     }
 
-    public void inverseButtons(){
-        if(btnAutoSet.getVisibility() == View.VISIBLE){
-            btnAutoSet.setVisibility(View.GONE);
-            btnManSet.setVisibility(View.VISIBLE);
+    public void enqueueGetSettings(){
+        Call<UserSettingsDTO> call = userSettingsService.getUserSettings(authToken);
+        call.enqueue(new Callback<UserSettingsDTO>() {
+            @Override
+            public void onResponse(Call<UserSettingsDTO> call, Response<UserSettingsDTO> response) {
+                if (response.isSuccessful()){
+                    UserSettingsDTO dto = response.body();
+                    userSettings.setUseK(dto.isUseK());
+                    userSettings.setUseManParameters(dto.isUseManParameters());
+                    userSettings.setDietType(dto.getDietType());
+
+                    updateSettingsLayout();
+
+                    if(dto.isUseManParameters()){
+                        updateDayLayout(true);
+                    } else{
+                        updateDayLayout(false);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserSettingsDTO> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void updateDayLayout(boolean useManParameters){
+
+        NumberFormat df = DecimalFormat.getInstance();
+        df.setMinimumFractionDigits(2);
+        df.setMaximumFractionDigits(2);
+        df.setRoundingMode(RoundingMode.DOWN);
+
+        if(useManParameters){
+            manContainer.setVisibility(View.VISIBLE);
+            autoContainer.setVisibility(View.GONE);
+
+            manKcal.setText(df.format(day.getKcalToEat()));
+            manProt.setText(df.format(day.getProteinToEat()));
+            manFat.setText(df.format(day.getFatToEat()));
+            manCarb.setText(df.format(day.getCarbohydrateToEat()));
+        } else{
+            manContainer.setVisibility(View.GONE);
+            autoContainer.setVisibility(View.VISIBLE);
+
+            autoKcal.setText(df.format(day.getKcalToEat()));
+            autoProt.setText(df.format(day.getProteinToEat()));
+            autoFat.setText(df.format(day.getFatToEat()));
+            autoCarb.setText(df.format(day.getCarbohydrateToEat()));
+        }
+    }
+
+    public void updateSettingsLayout(){
+        kCheck.setChecked(userSettings.isUseK());
+        manCheck.setChecked(userSettings.isUseManParameters());
+
+        if(userSettings.getDietType().equals("GAIN")){
+            gainRadio.setChecked(true);
+            mainRadio.setChecked(false);
+            reductionRadio.setChecked(false);
+        } else if(userSettings.getDietType().equals("MAINTAINING")){
+            gainRadio.setChecked(false);
+            mainRadio.setChecked(true);
+            reductionRadio.setChecked(false);
         } else {
-            btnAutoSet.setVisibility(View.VISIBLE);
-            btnManSet.setVisibility(View.GONE);
+            gainRadio.setChecked(false);
+            mainRadio.setChecked(false);
+            reductionRadio.setChecked(true);
         }
     }
 
     @Override
-    public void enqueueUpdateGoals(UpdateGoalsDTO updateGoalsDTO) {
-        Call<Void> call = goalsService.updateGoal(authToken, updateGoalsDTO);
+    public void enqueueUpdateManualParameters(ManualParametersDTO manualParametersDTO) {
+
+        Call<Void> call = manualParametersService.updateManualParameters(authToken, manualParametersDTO);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()){
-                    enqueueGetGoals();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void enqueueChooseManualOptions(boolean option){
-        BooleanDTO booleanDTO = new BooleanDTO(option);
-        Call<Void> call = goalsService.chooseManualOptions(authToken, booleanDTO);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
-                    inverseButtons();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void enqueueChooseDietType(String dietType){
-        DietTypeDTO dietTypeDTO = new DietTypeDTO(dietType);
-        Call<Void> call = goalsService.chooseDietType(authToken, dietTypeDTO);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()){
-                    enqueueGetGoals();
+                    enqueueGetLastDay();
                 }
             }
 
