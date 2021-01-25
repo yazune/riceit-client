@@ -41,7 +41,7 @@
                 app:hintTextColor="@color/black"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
-                app:startIconDrawable="@drawable/icon_user"
+                app:startIconDrawable="@drawable/icon_user_28"
                 app:startIconTint="@color/black"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black">
@@ -64,7 +64,7 @@
                 app:hintTextColor="@color/black"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
-                app:startIconDrawable="@drawable/icon_password"
+                app:startIconDrawable="@drawable/icon_password_28"
                 app:startIconTint="@color/black"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/black">
