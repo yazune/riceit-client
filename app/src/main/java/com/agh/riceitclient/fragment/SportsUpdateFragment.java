@@ -9,14 +9,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.AddSportManDTO;
+import com.agh.riceitclient.dto.UpdateSportDTO;
 import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
 import com.agh.riceitclient.util.SportConstants;
 import com.agh.riceitclient.util.SportsListener;
@@ -24,46 +23,46 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
 
-public class SportsAddFragment extends Fragment {
+public class SportsUpdateFragment extends Fragment {
+
+    SportsListener sportsListener;
+    UpdateSportDTO updateSportDTO;
 
     TextInputLayout nameInput, durationInput, burntInput, typeInput;
     Button btnConfirm;
 
-    private AutoCompleteTextView dropdownText;
+    AutoCompleteTextView dropdownText;
 
-    private SportsListener sportsListener;
-    private AddSportManDTO addSportManDTO;
+    HashMap<String, String> sportTypesMap = SportConstants.generateMapWithNamesAsKeys();
 
-    HashMap<String, String> sportsTypeMap = SportConstants.generateMapWithNamesAsKeys();
-
-    public SportsAddFragment(SportsListener sportsListener){
+    public SportsUpdateFragment(SportsListener sportsListener){
         this.sportsListener = sportsListener;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addSportManDTO = (AddSportManDTO) getArguments().getSerializable("addSportManDTO");
+        updateSportDTO = (UpdateSportDTO) getArguments().getSerializable("updateSportDTO");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_sports_add, container, false);
-        nameInput = v.findViewById(R.id.sports_add_name);
-        durationInput = v.findViewById(R.id.sports_add_duration);
-        burntInput = v.findViewById(R.id.sports_add_burnt);
-        typeInput = v.findViewById(R.id.sports_add_type);
-        dropdownText = v.findViewById(R.id.sports_add_dropdown);
 
-        btnConfirm = v.findViewById(R.id.btn_sports_add_confirm);
+        View v =  inflater.inflate(R.layout.fragment_sports_update, container, false);
+        nameInput = v.findViewById(R.id.sports_update_name);
+        durationInput = v.findViewById(R.id.sports_update_duration);
+        burntInput = v.findViewById(R.id.sports_update_burnt);
+        typeInput = v.findViewById(R.id.sports_update_type);
+        dropdownText = v.findViewById(R.id.sports_update_dropdown);
+
+        btnConfirm = v.findViewById(R.id.btn_sports_update_confirm);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirmSportAdding();
+                confirmUpdatingSport();
             }
         });
-
 
         String[] items = SportConstants.generateArrayWithNames();
 
@@ -75,21 +74,30 @@ public class SportsAddFragment extends Fragment {
 
         dropdownText.setAdapter(adapter);
 
+        fillFormWithData();
+
         return v;
     }
 
-    public void confirmSportAdding(){
+    public void fillFormWithData(){
+        nameInput.getEditText().setText(String.valueOf(updateSportDTO.getName()));
+        durationInput.getEditText().setText(String.valueOf(updateSportDTO.getDuration()));
+        burntInput.getEditText().setText(String.valueOf(updateSportDTO.getKcalBurnt()));
+    }
+
+
+    public void confirmUpdatingSport(){
         String nameStr = nameInput.getEditText().getText().toString().trim();
         String durationStr = durationInput.getEditText().getText().toString().trim();
         String burntStr = burntInput.getEditText().getText().toString().trim();
         String typeStr = typeInput.getEditText().getText().toString().trim();
 
-        addSportManDTO.setName(nameStr);
-        addSportManDTO.setDuration(Integer.parseInt(durationStr));
-        addSportManDTO.setKcalBurnt(Double.parseDouble(burntStr));
-        addSportManDTO.setSportType(sportsTypeMap.get(typeStr));
+        updateSportDTO.setName(nameStr);
+        updateSportDTO.setDuration(Integer.parseInt(durationStr));
+        updateSportDTO.setKcalBurnt(Double.parseDouble(burntStr));
+        updateSportDTO.setSportType(sportTypesMap.get(typeStr));
 
-        sportsListener.enqueueAddSportManually(addSportManDTO);
+        sportsListener.enqueueUpdateSport(updateSportDTO);
         hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
     }

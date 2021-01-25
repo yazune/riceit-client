@@ -19,8 +19,10 @@ import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.AddFoodDTO;
 import com.agh.riceitclient.dto.AddSportManDTO;
 import com.agh.riceitclient.dto.ManualParametersDTO;
+import com.agh.riceitclient.dto.RemoveSportDTO;
 import com.agh.riceitclient.dto.UpdateFoodDTO;
 import com.agh.riceitclient.dto.UpdateGoalsDTO;
+import com.agh.riceitclient.dto.UpdateSportDTO;
 import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
 import com.agh.riceitclient.fragment.GoalsFragment;
 import com.agh.riceitclient.fragment.MealsFragment;
@@ -224,6 +226,18 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void enqueueAddSportManually(AddSportManDTO addSportManDTO) {
         SportsFragment f = (SportsFragment) getSupportFragmentManager().findFragmentByTag("sportsFragment");
         f.enqueueAddSportManually(addSportManDTO);
+    }
+
+    @Override
+    public void enqueueRemoveSport(RemoveSportDTO removeSportDTO) {
+        SportsFragment f = (SportsFragment) getSupportFragmentManager().findFragmentByTag("sportsFragment");
+        f.enqueueRemoveSport(removeSportDTO);
+    }
+
+    @Override
+    public void enqueueUpdateSport(UpdateSportDTO updateSportDTO) {
+        SportsFragment f = (SportsFragment) getSupportFragmentManager().findFragmentByTag("sportsFragment");
+        f.enqueueUpdateSport(updateSportDTO);
     }
 
     @Override

@@ -18,14 +18,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
+import com.agh.riceitclient.activity.MainActivity;
 import com.agh.riceitclient.dto.AddSportManDTO;
 import com.agh.riceitclient.dto.DateDTO;
 import com.agh.riceitclient.dto.AllSportsDTO;
+import com.agh.riceitclient.dto.RemoveSportDTO;
+import com.agh.riceitclient.dto.UpdateSportDTO;
 import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
 import com.agh.riceitclient.model.Sport;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
 import com.agh.riceitclient.service.SportService;
 import com.agh.riceitclient.util.DetailsListener;
+import com.agh.riceitclient.util.SportConstants;
 import com.agh.riceitclient.util.SportsAdapter;
 import com.agh.riceitclient.util.SportsListener;
 
@@ -95,7 +99,7 @@ public class SportsFragment extends Fragment implements SportsListener {
         sportsRv = v.findViewById(R.id.sports_rv);
         sportsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        sportsAdapter = new SportsAdapter();
+        sportsAdapter = new SportsAdapter((SportsListener) getActivity(), getActivity().getSupportFragmentManager());
         isSportsAdapterAssigned = false;
 
         today = LocalDate.now();
@@ -187,7 +191,6 @@ public class SportsFragment extends Fragment implements SportsListener {
         });
     }
 
-
     @Override
     public void enqueueAddSportManually(AddSportManDTO addSportManDTO) {
         Call<Void> call = sportService.addSportMan(authToken, addSportManDTO);
@@ -195,6 +198,42 @@ public class SportsFragment extends Fragment implements SportsListener {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
+                    enqueueGetSports(today);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void enqueueRemoveSport(RemoveSportDTO removeSportDTO) {
+        Call<Void> call = sportService.removeSport(authToken, removeSportDTO);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    enqueueGetSports(today);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void enqueueUpdateSport(UpdateSportDTO updateSportDTO) {
+        Call<Void> call = sportService.updateSport(authToken, updateSportDTO);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
                     enqueueGetSports(today);
                 }
             }
