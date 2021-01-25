@@ -6,6 +6,6 @@
     android:padding="16dp"
     android:text="Sample Text"
     android:maxLines="1"
-    android:textAppearance="?attr/textAppearanceSubtitle1">
+    android:fontFamily="@font/roboto_medium">
 
 </TextView>

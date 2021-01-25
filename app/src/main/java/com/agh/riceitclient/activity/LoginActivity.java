@@ -26,7 +26,6 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     TextView titleText;
-    ImageView backBtn;
     Button loginBtn, createAccountBtn, forgetPasswordBtn;
     TextInputLayout usernameOrEmailInput, passwordInput;
 
@@ -38,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         titleText = findViewById(R.id.login_title_text);
-        backBtn = findViewById(R.id.login_back_button);
         loginBtn = findViewById(R.id.login_login_button);
         createAccountBtn = findViewById(R.id.login_create_account_button);
         forgetPasswordBtn = findViewById(R.id.login_forget_password_button);

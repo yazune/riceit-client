@@ -25,7 +25,6 @@ import retrofit2.Response;
 
 public class RegisterUserDetails2Activity extends AppCompatActivity {
 
-    ImageView backBtn;
     Button registerBtn, loginBtn;
     TextView titleText;
     TextInputLayout heightInput, weightInput, kInput;
@@ -40,7 +39,6 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
 
         registerDTO = (RegisterDTO) getIntent().getSerializableExtra("registerDTO");
 
-        backBtn = findViewById(R.id.register_back_button);
         registerBtn = findViewById(R.id.register_end_button);
         loginBtn = findViewById(R.id.register_login_button);
         titleText = findViewById(R.id.register_title_text);
@@ -65,11 +63,10 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.putExtra("username", response.body() != null ? response.body().getUsername() : null);
 
-                    Pair[] pairs = new Pair[4];
-                    pairs[0] = new Pair<View, String>(backBtn, "transition_back_arrow_btn");
-                    pairs[1] = new Pair<View, String>(titleText, "transition_title_text");
-                    pairs[2] = new Pair<View, String>(registerBtn, "transition_register_btn");
-                    pairs[3] = new Pair<View, String>(loginBtn, "transition_login_btn");
+                    Pair[] pairs = new Pair[3];
+                    pairs[0] = new Pair<View, String>(titleText, "transition_title_text");
+                    pairs[1] = new Pair<View, String>(registerBtn, "transition_register_btn");
+                    pairs[2] = new Pair<View, String>(loginBtn, "transition_login_btn");
 
                     ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(RegisterUserDetails2Activity.this, pairs);
                     startActivity(intent, activityOptions.toBundle());

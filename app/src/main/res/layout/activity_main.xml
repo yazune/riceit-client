@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        app:titleTextColor="@color/purple_500" />
+        app:titleTextColor="#303F9F" />
 
     <FrameLayout
         android:id="@+id/main_container"
