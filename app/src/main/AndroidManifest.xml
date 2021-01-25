@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.agh.riceitclient">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,18 +12,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Riceitclient">
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.WelcomeScreenActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+<!--        <activity android:name=".activity.TestActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity> -->
+         <activity android:name=".activity.LoginActivity" />
+         <activity android:name=".activity.MainActivity" />
+         <activity android:name=".activity.WelcomeScreenActivity">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activity.RegisterUserDetails2Activity" />
-        <activity android:name=".activity.RegisterUserDetailsActivity" />
-        <activity android:name=".activity.RegisterActivity" />
+         </activity>
+         <activity android:name=".activity.RegisterUserDetails2Activity" />
+         <activity android:name=".activity.RegisterUserDetailsActivity" />
+         <activity android:name=".activity.RegisterActivity" />
+
+<!--        <service android:name=".util.LocationService" />-->
 
         <meta-data
             android:name="preloaded_fonts"

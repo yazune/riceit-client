@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.main_toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         slidingRootNav = new SlidingRootNavBuilder(this)
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
 
-        adapter.setSelected(POS_NEAR);
+        adapter.setSelected(POS_DASHBOARD);
     }
 
     private DrawerItem createItemFor(int position){
@@ -171,8 +172,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             transaction.replace(R.id.main_container, goalsFragment, "goalsFragment");
         }
         else if (position == POS_SETTINGS) {
-//            SportsFragment sportsFragment = new SportsFragment();
-//            transaction.replace(R.id.main_container, sportsFragment, "sportsFragment");
+            SportsFragment sportsFragment = new SportsFragment();
+            transaction.replace(R.id.main_container, sportsFragment, "sportsFragment");
         }
         else if (position == POS_ABOUT_US) {
 //            RandomFragment randomFragment = new RandomFragment();

@@ -1,0 +1,20 @@
+package com.agh.riceitclient.util;
+
+public enum SportType {
+    RUNNING_5,
+    RUNNING_5_2,
+    RUNNING_6,
+    RUNNING_6_7,
+    RUNNING_7_5,
+    RUNNING_8_6,
+    RUNNING_10,
+    BICYCLING_12,
+    BICYCLING_14,
+    BICYCLING_16,
+    BICYCLING_20,
+    SWIMMING_GENERAL,
+    SWIMMING_BACKSTROKE,
+    SWIMMING_BREASTSTROKE,
+    SWIMMING_BUTTERFLY,
+    SWIMMING_CRAWL;
+}
