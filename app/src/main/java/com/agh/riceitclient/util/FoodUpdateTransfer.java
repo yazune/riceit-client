@@ -1,31 +1,23 @@
-package com.agh.riceitclient.dto;
+package com.agh.riceitclient.util;
 
 import java.io.Serializable;
 
-public class AddFoodDTO implements Serializable {
+public class FoodUpdateTransfer implements Serializable {
 
-    private long mealId;
+    private long foodId;
+
     private String name;
     private double kcal;
     private double protein;
     private double fat;
     private double carbohydrate;
 
-
-    public double getCarbohydrate() {
-        return carbohydrate;
+    public long getFoodId() {
+        return foodId;
     }
 
-    public void setCarbohydrate(double carbohydrate) {
-        this.carbohydrate = carbohydrate;
-    }
-
-    public long getMealId() {
-        return mealId;
-    }
-
-    public void setMealId(long mealId) {
-        this.mealId = mealId;
+    public void setFoodId(long foodId) {
+        this.foodId = foodId;
     }
 
     public String getName() {
@@ -44,6 +36,14 @@ public class AddFoodDTO implements Serializable {
         this.kcal = kcal;
     }
 
+    public double getProtein() {
+        return protein;
+    }
+
+    public void setProtein(double protein) {
+        this.protein = protein;
+    }
+
     public double getFat() {
         return fat;
     }
@@ -52,11 +52,11 @@ public class AddFoodDTO implements Serializable {
         this.fat = fat;
     }
 
-    public double getProtein() {
-        return protein;
+    public double getCarbohydrate() {
+        return carbohydrate;
     }
 
-    public void setProtein(double protein) {
-        this.protein = protein;
+    public void setCarbohydrate(double carbohydrate) {
+        this.carbohydrate = carbohydrate;
     }
 }

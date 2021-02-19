@@ -1,6 +1,6 @@
 package com.agh.riceitclient.model;
 
-import com.agh.riceitclient.dto.GetUserDetailsDTO;
+import com.agh.riceitclient.dto.UserDetailsGetDTO;
 
 public class UserDetails {
 
@@ -11,17 +11,17 @@ public class UserDetails {
     private double weight;
     private int age;
     private String gender;
-    private double k;
+    private double pal;
 
-    public void fillWithData(GetUserDetailsDTO getUserDetailsDTO){
-        this.username = getUserDetailsDTO.getUsername();
-        this.email = getUserDetailsDTO.getEmail();
+    public void fillWithData(UserDetailsGetDTO userDetailsGetDTO){
+        this.username = userDetailsGetDTO.getUsername();
+        this.email = userDetailsGetDTO.getEmail();
 
-        this.height = getUserDetailsDTO.getHeight();
-        this.weight = getUserDetailsDTO.getWeight();
-        this.age = getUserDetailsDTO.getAge();
-        this.gender = getUserDetailsDTO.getGender();
-        this.k = getUserDetailsDTO.getK();
+        this.height = userDetailsGetDTO.getHeight();
+        this.weight = userDetailsGetDTO.getWeight();
+        this.age = userDetailsGetDTO.getAge();
+        this.gender = userDetailsGetDTO.getGender();
+        this.pal = userDetailsGetDTO.getPal();
     }
 
     public String getUsername() {
@@ -72,11 +72,11 @@ public class UserDetails {
         this.gender = gender;
     }
 
-    public double getK() {
-        return k;
+    public double getPal() {
+        return pal;
     }
 
-    public void setK(double k) {
-        this.k = k;
+    public void setPal(double pal) {
+        this.pal = pal;
     }
 }

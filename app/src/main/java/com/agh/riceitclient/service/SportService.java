@@ -1,36 +1,34 @@
 package com.agh.riceitclient.service;
 
-import com.agh.riceitclient.dto.AddSportAutoDTO;
-import com.agh.riceitclient.dto.AddSportManDTO;
+import com.agh.riceitclient.dto.SportAddDTO;
 import com.agh.riceitclient.dto.DateDTO;
-import com.agh.riceitclient.dto.GetSportDTO;
-import com.agh.riceitclient.dto.RemoveSportDTO;
-import com.agh.riceitclient.dto.AllSportsDTO;
-import com.agh.riceitclient.dto.UpdateSportDTO;
+import com.agh.riceitclient.dto.SportsDTO;
+import com.agh.riceitclient.dto.SportUpdateDTO;
 import com.agh.riceitclient.model.Sport;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface SportService {
 
-    @POST("/sports/get")
-    Call<Sport> getSport(@Header("Authorization") String authToken, @Body GetSportDTO getSportDTO);
+    @GET("/sports/{sportId}")
+    Call<Sport> getSport(@Header("Authorization") String authToken, @Path("sportId") long sportId);
 
-    @POST("/sports/addMan")
-    Call<Void> addSportMan(@Header("Authorization") String authToken, @Body AddSportManDTO addSportManDTO);
+    @POST("/sports")
+    Call<Void> addSport(@Header("Authorization") String authToken, @Body SportAddDTO sportAddDTO);
 
-    @POST("/sports/addAuto")
-    Call<Void> addSportAuto(@Header("Authorization") String authToken, @Body AddSportAutoDTO addSportAutoDTO);
+    @DELETE("/sports/{sportId}")
+    Call<Void> removeSport(@Header("Authorization") String authToken, @Path("sportId") long sportId);
 
-    @POST("/sports/remove")
-    Call<Void> removeSport(@Header("Authorization") String authToken, @Body RemoveSportDTO removeSportDTO);
+    @PUT("/sports/{sportId}")
+    Call<Void> updateSport(@Header("Authorization") String authToken, @Path("sportId") long sportId, @Body SportUpdateDTO sportUpdateDTO);
 
-    @POST("/sports/update")
-    Call<Void> updateSport(@Header("Authorization") String authToken, @Body UpdateSportDTO updateSportDTO);
-
-    @POST("/sports/showAll")
-    Call<AllSportsDTO> showAllSports(@Header("Authorization") String authToken, @Body DateDTO dateDTO);
+    @POST("/sports/all")
+    Call<SportsDTO> getSports(@Header("Authorization") String authToken, @Body DateDTO dateDTO);
 }

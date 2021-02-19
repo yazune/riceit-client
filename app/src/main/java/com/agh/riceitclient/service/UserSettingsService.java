@@ -7,12 +7,13 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface UserSettingsService {
 
-    @GET("/user/settings")
+    @GET("/users/settings")
     Call<UserSettingsDTO> getUserSettings(@Header("Authorization") String authToken);
 
-    @POST("/user/settings")
+    @PUT("/users/settings")
     Call<Void> updateUserSettings(@Header("Authorization") String authToken, @Body UserSettingsDTO dto);
 }

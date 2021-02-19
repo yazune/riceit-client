@@ -2,32 +2,32 @@ package com.agh.riceitclient.dto;
 
 public class UserSettingsDTO {
 
-    private boolean useK;
+    private boolean usePal;
 
-    private boolean useManParameters;
+    private boolean useMan;
 
     private String dietType;
 
-    public UserSettingsDTO(boolean useK, boolean useManParameters, String dietType) {
-        this.useK = useK;
-        this.useManParameters = useManParameters;
+    public UserSettingsDTO(boolean usePal, boolean useMan, String dietType) {
+        this.usePal = usePal;
+        this.useMan = useMan;
         this.dietType = dietType;
     }
 
-    public boolean isUseK() {
-        return useK;
+    public boolean isUsePal() {
+        return usePal;
     }
 
-    public void setUseK(boolean useK) {
-        this.useK = useK;
+    public void setUsePal(boolean usePal) {
+        this.usePal = usePal;
     }
 
-    public boolean isUseManParameters() {
-        return useManParameters;
+    public boolean isUseMan() {
+        return useMan;
     }
 
-    public void setUseManParameters(boolean useManParameters) {
-        this.useManParameters = useManParameters;
+    public void setUseMan(boolean useMan) {
+        this.useMan = useMan;
     }
 
     public String getDietType() {

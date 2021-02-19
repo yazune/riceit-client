@@ -18,14 +18,10 @@ public class WelcomeScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getSupportActionBar().hide();
         setContentView(R.layout.activity_welcome_screen);
 
-        // Hooks
         loginBtn = findViewById(R.id.welcome_login_button);
         registerBtn = findViewById(R.id.welcome_register_button);
-        additionalBtn = findViewById(R.id.welcome_additional_button);
     }
 
     public void callLoginScreen(View view){

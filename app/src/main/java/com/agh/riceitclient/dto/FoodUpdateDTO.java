@@ -4,9 +4,7 @@ import com.agh.riceitclient.model.Food;
 
 import java.io.Serializable;
 
-public class UpdateFoodDTO implements Serializable {
-
-    private long foodId;
+public class FoodUpdateDTO implements Serializable {
 
     private String name;
     private double kcal;
@@ -15,20 +13,11 @@ public class UpdateFoodDTO implements Serializable {
     private double carbohydrate;
 
     public void fillWithFood(Food food, long foodId){
-        this.foodId = food.getId();
         this.name = food.getName();
         this.kcal = food.getKcal();
         this.protein = food.getProtein();
         this.fat = food.getFat();
         this.carbohydrate = food.getCarbohydrate();
-    }
-
-    public long getFoodId() {
-        return foodId;
-    }
-
-    public void setFoodId(long foodId) {
-        this.foodId = foodId;
     }
 
     public String getName() {

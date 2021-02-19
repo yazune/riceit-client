@@ -16,42 +16,42 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.AddFoodDTO;
-import com.agh.riceitclient.dto.AddSportManDTO;
+import com.agh.riceitclient.dto.FoodAddDTO;
+import com.agh.riceitclient.dto.SportAddDTO;
 import com.agh.riceitclient.dto.ManualParametersDTO;
-import com.agh.riceitclient.dto.RemoveSportDTO;
-import com.agh.riceitclient.dto.UpdateFoodDTO;
-import com.agh.riceitclient.dto.UpdateGoalsDTO;
-import com.agh.riceitclient.dto.UpdateSportDTO;
-import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
-import com.agh.riceitclient.fragment.GoalsFragment;
-import com.agh.riceitclient.fragment.MealsFragment;
-import com.agh.riceitclient.fragment.SportsFragment;
+import com.agh.riceitclient.dto.UserDetailsUpdateDTO;
+import com.agh.riceitclient.fragment.GoalFragment;
+import com.agh.riceitclient.fragment.MealFragment;
+import com.agh.riceitclient.fragment.SportFragment;
 import com.agh.riceitclient.fragment.UserDetailsFragment;
-import com.agh.riceitclient.util.DetailsListener;
-import com.agh.riceitclient.util.GoalsListener;
-import com.agh.riceitclient.util.MealsListener;
+import com.agh.riceitclient.listener.UserDetailsListener;
+import com.agh.riceitclient.listener.GoalListener;
+import com.agh.riceitclient.listener.MealListener;
 import com.agh.riceitclient.util.DrawerAdapter;
 import com.agh.riceitclient.util.DrawerItem;
+import com.agh.riceitclient.util.FoodAddTransfer;
+import com.agh.riceitclient.util.FoodUpdateTransfer;
+import com.agh.riceitclient.util.IdTransfer;
 import com.agh.riceitclient.util.SimpleItem;
 import com.agh.riceitclient.util.SpaceItem;
-import com.agh.riceitclient.util.SportsListener;
+import com.agh.riceitclient.listener.SportListener;
+import com.agh.riceitclient.util.SportUpdateTransfer;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener,
-        MealsListener,
-        DetailsListener,
-        SportsListener,
-        GoalsListener{
+        MealListener,
+        UserDetailsListener,
+        SportListener,
+        GoalListener {
 
     private static final int POS_CLOSE = 0;
-    private static final int POS_DASHBOARD = 1;
-    private static final int POS_MY_PROFILE = 2;
-    private static final int POS_NEAR = 3;
-    private static final int POS_SETTINGS = 4;
+    private static final int POS_MEAL = 1;
+    private static final int POS_DETAILS = 2;
+    private static final int POS_GOAL = 3;
+    private static final int POS_SPORT = 4;
     private static final int POS_ABOUT_US = 5;
     private static final int POS_LOGOUT = 7;
 
@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
         DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
                 createItemFor(POS_CLOSE),
-                createItemFor(POS_DASHBOARD).setChecked(true),
-                createItemFor(POS_MY_PROFILE),
-                createItemFor(POS_NEAR),
-                createItemFor(POS_SETTINGS),
+                createItemFor(POS_MEAL).setChecked(true),
+                createItemFor(POS_DETAILS),
+                createItemFor(POS_GOAL),
+                createItemFor(POS_SPORT),
                 createItemFor(POS_ABOUT_US),
                 new SpaceItem(260),
                 createItemFor(POS_LOGOUT)
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(adapter);
 
-        adapter.setSelected(POS_DASHBOARD);
+        adapter.setSelected(POS_MEAL);
     }
 
     private DrawerItem createItemFor(int position){
@@ -161,21 +161,21 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void onItemSelected(int position) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        if (position == POS_DASHBOARD) {
-            MealsFragment mealsFragment = new MealsFragment();
-            transaction.replace(R.id.main_container, mealsFragment, "mealsFragment");
+        if (position == POS_MEAL) {
+            MealFragment mealFragment = new MealFragment();
+            transaction.replace(R.id.main_container, mealFragment, "mealFragment");
         }
-        else if (position == POS_MY_PROFILE) {
+        else if (position == POS_DETAILS) {
             UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
             transaction.replace(R.id.main_container, userDetailsFragment, "userDetailsFragment");
         }
-        else if (position == POS_NEAR) {
-            GoalsFragment goalsFragment = new GoalsFragment();
-            transaction.replace(R.id.main_container, goalsFragment, "goalsFragment");
+        else if (position == POS_GOAL) {
+            GoalFragment goalFragment = new GoalFragment();
+            transaction.replace(R.id.main_container, goalFragment, "goalFragment");
         }
-        else if (position == POS_SETTINGS) {
-            SportsFragment sportsFragment = new SportsFragment();
-            transaction.replace(R.id.main_container, sportsFragment, "sportsFragment");
+        else if (position == POS_SPORT) {
+            SportFragment sportFragment = new SportFragment();
+            transaction.replace(R.id.main_container, sportFragment, "sportFragment");
         }
         else if (position == POS_ABOUT_US) {
 //            RandomFragment randomFragment = new RandomFragment();
@@ -193,56 +193,56 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     @Override
-    public void enqueueUpdateFood(UpdateFoodDTO updateFoodDTO) {
-        MealsFragment f = (MealsFragment)getSupportFragmentManager().findFragmentByTag("mealsFragment");
-        f.enqueueUpdateFood(updateFoodDTO);
+    public void enqueueUpdateFood(FoodUpdateTransfer foodUpdateTransfer) {
+        MealFragment f = (MealFragment)getSupportFragmentManager().findFragmentByTag("mealFragment");
+        f.enqueueUpdateFood(foodUpdateTransfer);
     }
 
     @Override
-    public void enqueueAddFood(AddFoodDTO addFoodDTO) {
-        MealsFragment f = (MealsFragment)getSupportFragmentManager().findFragmentByTag("mealsFragment");
-        f.enqueueAddFood(addFoodDTO);
+    public void enqueueAddFood(FoodAddDTO foodAddDTO) {
+        MealFragment f = (MealFragment)getSupportFragmentManager().findFragmentByTag("mealFragment");
+        f.enqueueAddFood(foodAddDTO);
     }
 
     @Override
     public void removeMealOrFood(boolean isMeal, long dataToRemove) {
-        MealsFragment f = (MealsFragment)getSupportFragmentManager().findFragmentByTag("mealsFragment");
+        MealFragment f = (MealFragment)getSupportFragmentManager().findFragmentByTag("mealFragment");
         f.removeMealOrFood(isMeal, dataToRemove);
     }
 
     @Override
     public void enqueueCreateMeal() {
-        MealsFragment f = (MealsFragment)getSupportFragmentManager().findFragmentByTag("mealsFragment");
+        MealFragment f = (MealFragment)getSupportFragmentManager().findFragmentByTag("mealFragment");
         f.enqueueCreateMeal();
     }
 
     @Override
-    public void enqueueUpdateUserDetails(UpdateUserDetailsDTO updateUserDetailsDTO) {
+    public void enqueueUpdateUserDetails(UserDetailsUpdateDTO userDetailsUpdateDTO) {
         UserDetailsFragment f = (UserDetailsFragment)getSupportFragmentManager().findFragmentByTag("userDetailsFragment");
-        f.enqueueUpdateUserDetails(updateUserDetailsDTO);
+        f.enqueueUpdateUserDetails(userDetailsUpdateDTO);
     }
 
     @Override
-    public void enqueueAddSportManually(AddSportManDTO addSportManDTO) {
-        SportsFragment f = (SportsFragment) getSupportFragmentManager().findFragmentByTag("sportsFragment");
-        f.enqueueAddSportManually(addSportManDTO);
+    public void enqueueAddSport(SportAddDTO sportAddDTO) {
+        SportFragment f = (SportFragment) getSupportFragmentManager().findFragmentByTag("sportFragment");
+        f.enqueueAddSport(sportAddDTO);
     }
 
     @Override
-    public void enqueueRemoveSport(RemoveSportDTO removeSportDTO) {
-        SportsFragment f = (SportsFragment) getSupportFragmentManager().findFragmentByTag("sportsFragment");
-        f.enqueueRemoveSport(removeSportDTO);
+    public void enqueueRemoveSport(IdTransfer idTransfer) {
+        SportFragment f = (SportFragment) getSupportFragmentManager().findFragmentByTag("sportFragment");
+        f.enqueueRemoveSport(idTransfer);
     }
 
     @Override
-    public void enqueueUpdateSport(UpdateSportDTO updateSportDTO) {
-        SportsFragment f = (SportsFragment) getSupportFragmentManager().findFragmentByTag("sportsFragment");
-        f.enqueueUpdateSport(updateSportDTO);
+    public void enqueueUpdateSport(SportUpdateTransfer sportUpdateTransfer) {
+        SportFragment f = (SportFragment) getSupportFragmentManager().findFragmentByTag("sportFragment");
+        f.enqueueUpdateSport(sportUpdateTransfer);
     }
 
     @Override
     public void enqueueUpdateManualParameters(ManualParametersDTO manualParametersDTO) {
-        GoalsFragment f = (GoalsFragment) getSupportFragmentManager().findFragmentByTag("goalsFragment");
+        GoalFragment f = (GoalFragment) getSupportFragmentManager().findFragmentByTag("goalFragment");
         f.enqueueUpdateManualParameters(manualParametersDTO);
     }
 }

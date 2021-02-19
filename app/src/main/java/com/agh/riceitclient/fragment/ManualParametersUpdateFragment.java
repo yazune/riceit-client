@@ -14,20 +14,19 @@ import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.dto.ManualParametersDTO;
-import com.agh.riceitclient.dto.UpdateGoalsDTO;
-import com.agh.riceitclient.util.GoalsListener;
+import com.agh.riceitclient.listener.GoalListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class GoalsUpdateFragment extends Fragment {
+public class ManualParametersUpdateFragment extends Fragment {
 
-    GoalsListener goalsListener;
+    GoalListener goalListener;
     Button btnConfirm;
     TextInputLayout kcalInput, protInput, fatInput, carbInput;
 
     ManualParametersDTO dto;
 
-    public GoalsUpdateFragment(GoalsListener goalsListener){
-        this.goalsListener = goalsListener;
+    public ManualParametersUpdateFragment(GoalListener goalListener){
+        this.goalListener = goalListener;
     }
 
     @Override
@@ -85,7 +84,7 @@ public class GoalsUpdateFragment extends Fragment {
         dto.setFatMan(fat);
         dto.setCarbohydrateMan(carb);
 
-        goalsListener.enqueueUpdateManualParameters(dto);
+        goalListener.enqueueUpdateManualParameters(dto);
         hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
     }

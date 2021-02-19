@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
 import com.agh.riceitclient.fragment.DecideFragment;
+import com.agh.riceitclient.listener.MealListener;
 import com.agh.riceitclient.model.Meal;
 
 import java.math.RoundingMode;
@@ -24,14 +25,14 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHolder> {
+public class MealAdapter extends RecyclerView.Adapter<MealAdapter.ItemViewHolder> {
 
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
     private ArrayList<Meal> meals;
     private Activity activity;
     private FragmentManager supportFragmentManager;
 
-    public MealsAdapter(Activity activity, FragmentManager supportFragmentManager){
+    public MealAdapter(Activity activity, FragmentManager supportFragmentManager){
         this.activity = activity;
         this.supportFragmentManager = supportFragmentManager;
     }
@@ -40,7 +41,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
 
         private TextView mealName;
         private TextView kcalAmount, protAmount, fatAmount, carboAmount;
-        private RecyclerView foodsRv;
+        private RecyclerView foodRV;
         private Button addMealBtn;
         private ImageView removeMealBtn;
 
@@ -51,7 +52,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
             protAmount = itemView.findViewById(R.id.meal_prot_amount);
             fatAmount = itemView.findViewById(R.id.meal_fat_amount);
             carboAmount = itemView.findViewById(R.id.meal_carb_amount);
-            foodsRv = itemView.findViewById(R.id.foods_rv);
+            foodRV = itemView.findViewById(R.id.foods_rv);
             addMealBtn = itemView.findViewById(R.id.create_meal_button);
             removeMealBtn = itemView.findViewById(R.id.meal_remove_button);
         }
@@ -59,7 +60,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
 
     @NonNull
     @Override
-    public MealsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MealAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view;
 
@@ -68,7 +69,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.btn_create_meal, parent, false);
         }
-        return new MealsAdapter.ItemViewHolder(view);
+        return new MealAdapter.ItemViewHolder(view);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MealsAdapter.ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MealAdapter.ItemViewHolder holder, int position) {
 
         if (position != meals.size()){
 
@@ -94,7 +95,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
             holder.fatAmount.setText(df.format(meal.getFat()));
             holder.carboAmount.setText(df.format(meal.getCarbohydrate()));
 
-            holder.foodsRv.setVisibility(meal.isExpanded()? View.VISIBLE : View.GONE);
+            holder.foodRV.setVisibility(meal.isExpanded()? View.VISIBLE : View.GONE);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -105,7 +106,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
             });
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
-                    holder.foodsRv.getContext(),
+                    holder.foodRV.getContext(),
                     LinearLayoutManager.VERTICAL,
                     false
             );
@@ -113,7 +114,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
             holder.removeMealBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DecideFragment decideFragment = new DecideFragment((MealsListener)activity);
+                    DecideFragment decideFragment = new DecideFragment((MealListener)activity);
                     Bundle args = new Bundle();
                     args.putLong("dataToRemove", meal.getId());
                     args.putString("dataType", "meal");
@@ -124,16 +125,16 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ItemViewHold
 
             linearLayoutManager.setInitialPrefetchItemCount(meal.getFoods().size());
 
-            FoodsAdapter foodsAdapter = new FoodsAdapter(activity, supportFragmentManager, meal.getId());
-            foodsAdapter.setFoods(meal.getFoods());
-            holder.foodsRv.setLayoutManager(linearLayoutManager);
-            holder.foodsRv.setAdapter(foodsAdapter);
-            holder.foodsRv.setRecycledViewPool(viewPool);
+            FoodAdapter foodAdapter = new FoodAdapter(activity, supportFragmentManager, meal.getId());
+            foodAdapter.setFoods(meal.getFoods());
+            holder.foodRV.setLayoutManager(linearLayoutManager);
+            holder.foodRV.setAdapter(foodAdapter);
+            holder.foodRV.setRecycledViewPool(viewPool);
         } else {
             holder.addMealBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((MealsListener) activity).enqueueCreateMeal();
+                    ((MealListener) activity).enqueueCreateMeal();
                 }
             });
         }

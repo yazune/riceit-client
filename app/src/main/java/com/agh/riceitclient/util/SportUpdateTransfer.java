@@ -1,8 +1,9 @@
-package com.agh.riceitclient.dto;
+package com.agh.riceitclient.util;
 
-public class AddSportAutoDTO {
+import java.io.Serializable;
 
-    private String date;
+public class SportUpdateTransfer implements Serializable {
+    private long sportId;
 
     private String name;
 
@@ -10,13 +11,7 @@ public class AddSportAutoDTO {
 
     private String sportType;
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
+    private double kcalBurnt;
 
     public String getName() {
         return name;
@@ -24,6 +19,14 @@ public class AddSportAutoDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getKcalBurnt() {
+        return kcalBurnt;
+    }
+
+    public void setKcalBurnt(double kcalBurnt) {
+        this.kcalBurnt = kcalBurnt;
     }
 
     public int getDuration() {
@@ -40,5 +43,13 @@ public class AddSportAutoDTO {
 
     public void setSportType(String sportType) {
         this.sportType = sportType;
+    }
+
+    public long getSportId() {
+        return sportId;
+    }
+
+    public void setSportId(long sportId) {
+        this.sportId = sportId;
     }
 }

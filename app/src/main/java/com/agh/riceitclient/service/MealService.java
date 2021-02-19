@@ -1,34 +1,35 @@
 package com.agh.riceitclient.service;
 
-import com.agh.riceitclient.dto.AddFoodDTO;
+import com.agh.riceitclient.dto.FoodAddDTO;
 import com.agh.riceitclient.dto.DateDTO;
-import com.agh.riceitclient.dto.AllMealsDTO;
-import com.agh.riceitclient.dto.RemoveFoodDTO;
-import com.agh.riceitclient.dto.RemoveMealDTO;
-import com.agh.riceitclient.dto.UpdateFoodDTO;
+import com.agh.riceitclient.dto.MealsDTO;
+import com.agh.riceitclient.dto.FoodUpdateDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface MealService {
 
-    @POST("/meals/showAll")
-    Call<AllMealsDTO> showAllMeals(@Header("Authorization") String authToken, @Body DateDTO dateDTO);
+    @POST("/meals/all")
+    Call<MealsDTO> getMeals(@Header("Authorization") String authToken, @Body DateDTO dateDTO);
 
-    @POST("/meals/create")
+    @POST("/meals")
     Call<Void> createMeal(@Header("Authorization") String authToken, @Body DateDTO dateDTO);
 
-    @POST("/meals/remove")
-    Call<Void> removeMeal(@Header("Authorization") String authToken, @Body RemoveMealDTO removeMealDTO);
+    @DELETE("/meals/{mealId}")
+    Call<Void> removeMeal(@Header("Authorization") String authToken, @Path("mealId") long mealId);
 
-    @POST("/meals/removeFood")
-    Call<Void> removeFood(@Header("Authorization") String authToken, @Body RemoveFoodDTO removeFoodDTO);
+    @DELETE("/foods/{foodId}")
+    Call<Void> removeFood(@Header("Authorization") String authToken, @Path("foodId") long foodId);
 
-    @POST("/meals/addFood")
-    Call<Void> addFood(@Header("Authorization") String authToken, @Body AddFoodDTO addFoodDTO);
+    @POST("/foods")
+    Call<Void> addFood(@Header("Authorization") String authToken, @Body FoodAddDTO foodAddDTO);
 
-    @POST("/meals/updateFood")
-    Call<Void> updateFood(@Header("Authorization") String authToken, @Body UpdateFoodDTO updateFoodDTO);
+    @PUT("/foods/{foodId}")
+    Call<Void> updateFood(@Header("Authorization") String authToken, @Path("foodId") long foodId, @Body FoodUpdateDTO foodUpdateDTO);
 }

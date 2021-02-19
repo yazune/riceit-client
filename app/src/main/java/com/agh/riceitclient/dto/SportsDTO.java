@@ -4,7 +4,7 @@ import com.agh.riceitclient.model.Sport;
 
 import java.util.ArrayList;
 
-public class AllSportsDTO {
+public class SportsDTO {
 
     private ArrayList<Sport> sports;
 

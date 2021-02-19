@@ -9,32 +9,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.BooleanDTO;
-import com.agh.riceitclient.dto.DietTypeDTO;
-import com.agh.riceitclient.dto.GetGoalDTO;
 import com.agh.riceitclient.dto.ManualParametersDTO;
-import com.agh.riceitclient.dto.UpdateGoalsDTO;
-import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
 import com.agh.riceitclient.dto.UserSettingsDTO;
 import com.agh.riceitclient.model.Day;
-import com.agh.riceitclient.model.Goal;
 import com.agh.riceitclient.model.UserSettings;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
 import com.agh.riceitclient.service.DayService;
 import com.agh.riceitclient.service.ManualParametersService;
 import com.agh.riceitclient.service.UserSettingsService;
-import com.agh.riceitclient.util.DetailsListener;
-import com.agh.riceitclient.util.GoalsListener;
+import com.agh.riceitclient.listener.GoalListener;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -45,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GoalsFragment extends Fragment implements GoalsListener {
+public class GoalFragment extends Fragment implements GoalListener {
 
     String authToken;
     ManualParametersService manualParametersService = ServiceGenerator.createService(ManualParametersService.class);
@@ -58,7 +49,7 @@ public class GoalsFragment extends Fragment implements GoalsListener {
 
     Button btnUpdateMan, btnUpdateSettings;
     RadioButton gainRadio, mainRadio, reductionRadio;
-    CheckBox kCheck, manCheck;
+    CheckBox palCheck, manCheck;
 
     Day day = new Day();
     UserSettings userSettings = new UserSettings();
@@ -85,7 +76,7 @@ public class GoalsFragment extends Fragment implements GoalsListener {
         mainRadio = v.findViewById(R.id.radio_main);
         reductionRadio = v.findViewById(R.id.radio_reduction);
 
-        kCheck = v.findViewById(R.id.check_use_k);
+        palCheck = v.findViewById(R.id.check_use_k);
         manCheck = v.findViewById(R.id.check_use_man);
         btnUpdateSettings = v.findViewById(R.id.btn_settings_update);
 
@@ -99,7 +90,7 @@ public class GoalsFragment extends Fragment implements GoalsListener {
         btnUpdateMan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGoalsUpdateFragment();
+                openManualParametersUpdateFragment();
             }
         });
 
@@ -111,8 +102,8 @@ public class GoalsFragment extends Fragment implements GoalsListener {
         return v;
     }
 
-    public void openGoalsUpdateFragment(){
-        Fragment goalsUpdateFragment = new GoalsUpdateFragment((GoalsListener) getActivity());
+    public void openManualParametersUpdateFragment(){
+        Fragment manualParametersUpdateFragment = new ManualParametersUpdateFragment((GoalListener) getActivity());
         ManualParametersDTO manualParametersDTO = new ManualParametersDTO(
                 day.getKcalToEat(),
                 day.getProteinToEat(),
@@ -122,11 +113,11 @@ public class GoalsFragment extends Fragment implements GoalsListener {
 
         Bundle args = new Bundle();
         args.putSerializable("manualParametersDTO", manualParametersDTO);
-        goalsUpdateFragment.setArguments(args);
+        manualParametersUpdateFragment.setArguments(args);
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_container, goalsUpdateFragment, "goalsUpdateFragment")
+                .add(R.id.main_container, manualParametersUpdateFragment, "manualParametersUpdateFragment")
                 .addToBackStack(null)
                 .commit();
     }
@@ -146,7 +137,7 @@ public class GoalsFragment extends Fragment implements GoalsListener {
         }
 
         UserSettingsDTO userSettingsDTO = new UserSettingsDTO(
-                kCheck.isChecked(),
+                palCheck.isChecked(),
                 manCheck.isChecked(),
                 dietType
         );
@@ -192,13 +183,13 @@ public class GoalsFragment extends Fragment implements GoalsListener {
             public void onResponse(Call<UserSettingsDTO> call, Response<UserSettingsDTO> response) {
                 if (response.isSuccessful()){
                     UserSettingsDTO dto = response.body();
-                    userSettings.setUseK(dto.isUseK());
-                    userSettings.setUseManParameters(dto.isUseManParameters());
+                    userSettings.setUsePal(dto.isUsePal());
+                    userSettings.setUseMan(dto.isUseMan());
                     userSettings.setDietType(dto.getDietType());
 
                     updateSettingsLayout();
 
-                    if(dto.isUseManParameters()){
+                    if(dto.isUseMan()){
                         updateDayLayout(true);
                     } else{
                         updateDayLayout(false);
@@ -240,8 +231,8 @@ public class GoalsFragment extends Fragment implements GoalsListener {
     }
 
     public void updateSettingsLayout(){
-        kCheck.setChecked(userSettings.isUseK());
-        manCheck.setChecked(userSettings.isUseManParameters());
+        palCheck.setChecked(userSettings.isUsePal());
+        manCheck.setChecked(userSettings.isUseMan());
 
         if(userSettings.getDietType().equals("GAIN")){
             gainRadio.setChecked(true);

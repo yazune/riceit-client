@@ -12,10 +12,10 @@ import retrofit2.http.POST;
 
 public interface UserService {
     
-    @POST("/existsByUsername")
+    @POST("/auth/existsByUsername")
     Call<BooleanDTO> existsByUsername(@Body ExistsUsernameDTO existsUsernameDTO);
 
-    @POST("/existsByEmail")
+    @POST("/auth/existsByEmail")
     Call<BooleanDTO> existsByEmail(@Body ExistsEmailDTO existsEmailDTO);
 
     @POST("/auth/register")

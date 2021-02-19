@@ -20,14 +20,14 @@ public class Day {
     private double fatBurnt;
     private double carbohydrateBurnt;
 
-    private boolean useK;
+    private boolean usePal;
 
-    public boolean isUseK() {
-        return useK;
+    public boolean isUsePal() {
+        return usePal;
     }
 
-    public void setUseK(boolean useK) {
-        this.useK = useK;
+    public void setUsePal(boolean usePal) {
+        this.usePal = usePal;
     }
 
     public long getId() {

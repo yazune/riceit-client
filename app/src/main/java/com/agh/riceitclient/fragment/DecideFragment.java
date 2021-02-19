@@ -14,18 +14,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.util.MealsListener;
+import com.agh.riceitclient.listener.MealListener;
 
 public class DecideFragment extends DialogFragment {
     TextView titleText, descriptionText;
     Button cancelBtn, confirmBtn;
     private long dataToRemove;
-    private MealsListener mealsListener;
+    private MealListener mealListener;
     private String dataType;
 
 
-    public DecideFragment(MealsListener mealsListener){
-        this.mealsListener = mealsListener;
+    public DecideFragment(MealListener mealListener){
+        this.mealListener = mealListener;
     }
 
     @Nullable
@@ -49,7 +49,7 @@ public class DecideFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 boolean isMeal = dataType.equals("meal");
-                mealsListener.removeMealOrFood(isMeal, dataToRemove);
+                mealListener.removeMealOrFood(isMeal, dataToRemove);
                 getDialog().dismiss();
             }
         });

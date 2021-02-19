@@ -16,10 +16,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.UpdateFoodDTO;
-import com.agh.riceitclient.fragment.AddFoodFragment;
+import com.agh.riceitclient.fragment.FoodAddFragment;
 import com.agh.riceitclient.fragment.DecideFragment;
-import com.agh.riceitclient.fragment.UpdateFoodFragment;
+import com.agh.riceitclient.fragment.FoodUpdateFragment;
+import com.agh.riceitclient.listener.MealListener;
 import com.agh.riceitclient.model.Food;
 
 import java.math.RoundingMode;
@@ -27,14 +27,14 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemViewHolder> {
+public class FoodAdapter extends  RecyclerView.Adapter<FoodAdapter.SubItemViewHolder> {
 
     private ArrayList<Food> foods;
     private Activity activity;
     private long mealId;
     private FragmentManager supportFragmentManager;
 
-    public FoodsAdapter(Activity activity, FragmentManager supportFragmentManager, long mealId) {
+    public FoodAdapter(Activity activity, FragmentManager supportFragmentManager, long mealId) {
         this.activity = activity;
         this.supportFragmentManager = supportFragmentManager;
         this.mealId = mealId;
@@ -72,7 +72,7 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
 
     @NonNull
     @Override
-    public FoodsAdapter.SubItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FoodAdapter.SubItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view;
 
@@ -82,12 +82,12 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.btn_create_food, parent, false);
         }
-        return new FoodsAdapter.SubItemViewHolder(view);
+        return new FoodAdapter.SubItemViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FoodsAdapter.SubItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FoodAdapter.SubItemViewHolder holder, int position) {
 
         if (position != foods.size()){
             Food food = foods.get(position);
@@ -111,7 +111,7 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
             holder.removeFoodBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DecideFragment decideFragment = new DecideFragment((MealsListener) activity);
+                    DecideFragment decideFragment = new DecideFragment((MealListener) activity);
                     Bundle args = new Bundle();
                     args.putLong("dataToRemove", food.getId());
                     args.putString("dataType", "food");
@@ -123,14 +123,18 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-
-                    Fragment updateFoodFragment = new UpdateFoodFragment((MealsListener) activity);
-                    UpdateFoodDTO updateFoodDTO = new UpdateFoodDTO();
-                    updateFoodDTO.fillWithFood(food, food.getId());
+                    Fragment foodUpdateFragment = new FoodUpdateFragment((MealListener) activity);
+                    FoodUpdateTransfer foodUpdateTransfer = new FoodUpdateTransfer();
+                    foodUpdateTransfer.setFoodId(food.getId());
+                    foodUpdateTransfer.setName(food.getName());
+                    foodUpdateTransfer.setKcal(food.getKcal());
+                    foodUpdateTransfer.setProtein(food.getProtein());
+                    foodUpdateTransfer.setFat(food.getFat());
+                    foodUpdateTransfer.setCarbohydrate(food.getCarbohydrate());
                     Bundle args = new Bundle();
-                    args.putSerializable("updateFoodDTO", updateFoodDTO);
-                    updateFoodFragment.setArguments(args);
-                    supportFragmentManager.beginTransaction().add(R.id.main_container, updateFoodFragment, "updateFoodFragment").addToBackStack(null).commit();
+                    args.putSerializable("foodUpdateTransfer", foodUpdateTransfer);
+                    foodUpdateFragment.setArguments(args);
+                    supportFragmentManager.beginTransaction().add(R.id.main_container, foodUpdateFragment, "foodUpdateFragment").addToBackStack(null).commit();
                     return true;
                 }
             });
@@ -139,11 +143,11 @@ public class FoodsAdapter extends  RecyclerView.Adapter<FoodsAdapter.SubItemView
             holder.addFoodBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Fragment addFoodFragment = new AddFoodFragment((MealsListener) activity);
+                    Fragment foodAddFragment = new FoodAddFragment((MealListener) activity);
                     Bundle args = new Bundle();
                     args.putLong("mealId", mealId);
-                    addFoodFragment.setArguments(args);
-                    supportFragmentManager.beginTransaction().add(R.id.main_container, addFoodFragment, "addFoodFragment").addToBackStack(null).commit();
+                    foodAddFragment.setArguments(args);
+                    supportFragmentManager.beginTransaction().add(R.id.main_container, foodAddFragment, "foodAddFragment").addToBackStack(null).commit();
                 }
             });
         }

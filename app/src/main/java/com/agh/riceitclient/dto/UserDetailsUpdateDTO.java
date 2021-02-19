@@ -4,7 +4,7 @@ import com.agh.riceitclient.model.UserDetails;
 
 import java.io.Serializable;
 
-public class UpdateUserDetailsDTO implements Serializable {
+public class UserDetailsUpdateDTO implements Serializable {
 
     private double height;
 
@@ -14,14 +14,14 @@ public class UpdateUserDetailsDTO implements Serializable {
 
     private int age;
 
-    private double k;
+    private double pal;
 
     public void fillWithData(UserDetails userDetails){
         this.height = userDetails.getHeight();
         this.weight = userDetails.getWeight();
         this.gender = userDetails.getGender();
         this.age = userDetails.getAge();
-        this.k = userDetails.getK();
+        this.pal = userDetails.getPal();
     }
 
     public double getHeight() {
@@ -56,11 +56,11 @@ public class UpdateUserDetailsDTO implements Serializable {
         this.age = age;
     }
 
-    public double getK() {
-        return k;
+    public double getPal() {
+        return pal;
     }
 
-    public void setK(double k) {
-        this.k = k;
+    public void setPal(double pal) {
+        this.pal = pal;
     }
 }

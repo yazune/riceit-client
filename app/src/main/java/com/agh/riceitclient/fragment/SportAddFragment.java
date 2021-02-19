@@ -9,41 +9,42 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.AddSportManDTO;
-import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
+import com.agh.riceitclient.dto.SportAddDTO;
 import com.agh.riceitclient.util.SportConstants;
-import com.agh.riceitclient.util.SportsListener;
+import com.agh.riceitclient.listener.SportListener;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
 
-public class SportsAddFragment extends Fragment {
+public class SportAddFragment extends Fragment {
 
     TextInputLayout nameInput, durationInput, burntInput, typeInput;
     Button btnConfirm;
+    CheckBox manualCheck;
 
     private AutoCompleteTextView dropdownText;
 
-    private SportsListener sportsListener;
-    private AddSportManDTO addSportManDTO;
+    private SportListener sportListener;
+    private SportAddDTO sportAddDTO;
 
     HashMap<String, String> sportsTypeMap = SportConstants.generateMapWithNamesAsKeys();
 
-    public SportsAddFragment(SportsListener sportsListener){
-        this.sportsListener = sportsListener;
+    public SportAddFragment(SportListener sportListener){
+        this.sportListener = sportListener;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addSportManDTO = (AddSportManDTO) getArguments().getSerializable("addSportManDTO");
+        sportAddDTO = (SportAddDTO) getArguments().getSerializable("sportAddDTO");
     }
 
     @Nullable
@@ -55,12 +56,31 @@ public class SportsAddFragment extends Fragment {
         burntInput = v.findViewById(R.id.sports_add_burnt);
         typeInput = v.findViewById(R.id.sports_add_type);
         dropdownText = v.findViewById(R.id.sports_add_dropdown);
+        manualCheck = v.findViewById(R.id.check_manual);
 
         btnConfirm = v.findViewById(R.id.btn_sports_add_confirm);
+
+        if (sportAddDTO.getKcalBurnt() >= 0){
+            manualCheck.setChecked(true);
+            burntInput.setVisibility(View.VISIBLE);
+        } else {
+            manualCheck.setChecked(false);
+            burntInput.setVisibility(View.GONE);
+        }
+
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirmSportAdding();
+            }
+        });
+
+        manualCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    burntInput.setVisibility(View.VISIBLE);
+                } else burntInput.setVisibility(View.GONE);
             }
         });
 
@@ -81,15 +101,20 @@ public class SportsAddFragment extends Fragment {
     public void confirmSportAdding(){
         String nameStr = nameInput.getEditText().getText().toString().trim();
         String durationStr = durationInput.getEditText().getText().toString().trim();
-        String burntStr = burntInput.getEditText().getText().toString().trim();
         String typeStr = typeInput.getEditText().getText().toString().trim();
 
-        addSportManDTO.setName(nameStr);
-        addSportManDTO.setDuration(Integer.parseInt(durationStr));
-        addSportManDTO.setKcalBurnt(Double.parseDouble(burntStr));
-        addSportManDTO.setSportType(sportsTypeMap.get(typeStr));
+        sportAddDTO.setName(nameStr);
+        sportAddDTO.setDuration(Integer.parseInt(durationStr));
+        sportAddDTO.setSportType(sportsTypeMap.get(typeStr));
 
-        sportsListener.enqueueAddSportManually(addSportManDTO);
+        if (manualCheck.isChecked()){
+            String burntStr = burntInput.getEditText().getText().toString().trim();
+            sportAddDTO.setKcalBurnt(Double.parseDouble(burntStr));
+        } else {
+            sportAddDTO.setKcalBurnt(-1);
+        }
+
+        sportListener.enqueueAddSport(sportAddDTO);
         hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
     }

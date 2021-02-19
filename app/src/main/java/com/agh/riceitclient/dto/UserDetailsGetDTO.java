@@ -1,6 +1,6 @@
 package com.agh.riceitclient.dto;
 
-public class GetUserDetailsDTO {
+public class UserDetailsGetDTO {
 
     private String username;
     private String email;
@@ -9,7 +9,7 @@ public class GetUserDetailsDTO {
     private double weight;
     private int age;
     private String gender;
-    private double k;
+    private double pal;
 
     public String getUsername() {
         return username;
@@ -59,11 +59,12 @@ public class GetUserDetailsDTO {
         this.gender = gender;
     }
 
-    public double getK() {
-        return k;
+    public double getPal() {
+        return pal;
     }
 
-    public void setK(double k) {
-        this.k = k;
+    public void setPal(double pal) {
+        this.pal = pal;
     }
 }
+

@@ -5,22 +5,31 @@ import java.util.HashMap;
 public class SportConstants {
 
     private final static String[][] constants = {
+            {"Running with 6.43 km/h", "RUNNING_4"},
             {"Running with 8.05 km/h", "RUNNING_5"},
             {"Running with 8.37 km/h","RUNNING_5_2"},
-            {"Running with 9.67 km/h","RUNNING_6"},
+            {"Running with 9.66 km/h","RUNNING_6"},
             {"Running with 10.78 km/h","RUNNING_6_7"},
+            {"Running with 11.27 km/h","RUNNING_7"},
             {"Running with 12.07 km/h","RUNNING_7_5"},
+            {"Running with 12.87 km/h","RUNNING_8"},
             {"Running with 13.84 km/h","RUNNING_8_6"},
+            {"Running with 14.48 km/h","RUNNING_9"},
             {"Running with 16.09 km/h","RUNNING_10"},
-            {"Bicycling with 19.31 km/h", "BICYCLING_12"},
-            {"Bicycling with 22.53 km/h", "BICYCLING_14"},
-            {"Bicycling with 25.75 km/h", "BICYCLING_16"},
-            {"Bicycling with 32.19 km/h", "BICYCLING_20"},
+            {"Running with 17.70 km/h","RUNNING_11"},
+            {"Running with 19.31 km/h","RUNNING_12"},
+            {"Running with 20.92 km/h","RUNNING_13"},
+            {"Running with 22.53 km/h","RUNNING_14"},
+            {"Bicycling with speed between 16.09 km/h and 19.31 km/h", "BICYCLING_10_TO_12"},
+            {"Bicycling with speed between 19.31 km/h and 22.53 km/h", "BICYCLING_12_TO_14"},
+            {"Bicycling with speed between 22.53 km/h and 25.75 km/h", "BICYCLING_14_TO_16"},
+            {"Bicycling with speed between 25.75 km/h and 30.58 km/h", "BICYCLING_16_TO_19"},
+            {"Bicycling with speed higher than 30.58 km/h", "BICYCLING_MORE_THAN_20"},
             {"Swimming (General)","SWIMMING_GENERAL"},
             {"Swimming (Backstroke)","SWIMMING_BACKSTROKE"},
-            {"Swimming (Breaststroke)","SWIMMING_BREASTSTROKE"},
-            {"Swimming (Butterfly)","SWIMMING_BUTTERFLY"},
             {"Swimming (Crawl)","SWIMMING_CRAWL"},
+            {"Swimming (Breaststroke)","SWIMMING_BREASTSTROKE"},
+            {"Swimming (Butterfly)","SWIMMING_BUTTERFLY"}
     };
 
     public static HashMap<String, String> generateMapWithNamesAsKeys(){

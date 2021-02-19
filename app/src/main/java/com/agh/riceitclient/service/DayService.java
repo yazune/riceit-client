@@ -11,9 +11,9 @@ import retrofit2.http.POST;
 
 public interface DayService {
 
-    @POST("/day/getDay")
+    @POST("/days")
     Call<Day> getDay(@Header("Authorization") String authToken, @Body DateDTO dateDTO);
 
-    @GET("/day/getLastDay")
+    @GET("/days/last")
     Call<Day> getLastDay(@Header("Authorization") String authToken);
 }

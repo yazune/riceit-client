@@ -8,25 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.GetUserDetailsDTO;
-import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
+import com.agh.riceitclient.dto.UserDetailsGetDTO;
+import com.agh.riceitclient.dto.UserDetailsUpdateDTO;
 import com.agh.riceitclient.model.UserDetails;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
 import com.agh.riceitclient.service.UserDetailsService;
-import com.agh.riceitclient.util.DetailsListener;
+import com.agh.riceitclient.listener.UserDetailsListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserDetailsFragment extends Fragment implements DetailsListener {
+public class UserDetailsFragment extends Fragment implements UserDetailsListener {
 
     String authToken;
     UserDetailsService userDetailsService = ServiceGenerator.createService(UserDetailsService.class);
@@ -34,7 +33,7 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
     Button btnUpdate;
 
     TextView usernameText, emailText;
-    TextView heightAmount,weightAmount, genderType, ageAmount, kAmount;
+    TextView heightAmount,weightAmount, genderType, ageAmount, palAmount;
 
     UserDetails userDetails = new UserDetails();
 
@@ -50,7 +49,7 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
         weightAmount = v.findViewById(R.id.details_weight_amount);
         genderType = v.findViewById(R.id.details_gender);
         ageAmount = v.findViewById(R.id.details_age_amount);
-        kAmount = v.findViewById(R.id.details_k_amount);
+        palAmount = v.findViewById(R.id.details_k_amount);
 
         btnUpdate = v.findViewById(R.id.btn_details_update);
 
@@ -70,10 +69,10 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
     }
 
     public void enqueueGetUserDetails(){
-        Call<GetUserDetailsDTO> call = userDetailsService.getUserDetails(authToken);
-        call.enqueue(new Callback<GetUserDetailsDTO>() {
+        Call<UserDetailsGetDTO> call = userDetailsService.getUserDetails(authToken);
+        call.enqueue(new Callback<UserDetailsGetDTO>() {
             @Override
-            public void onResponse(Call<GetUserDetailsDTO> call, Response<GetUserDetailsDTO> response) {
+            public void onResponse(Call<UserDetailsGetDTO> call, Response<UserDetailsGetDTO> response) {
                 if (response.isSuccessful()){
                     userDetails.fillWithData(response.body());
                     updateLayout();
@@ -81,7 +80,7 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
             }
 
             @Override
-            public void onFailure(Call<GetUserDetailsDTO> call, Throwable t) {
+            public void onFailure(Call<UserDetailsGetDTO> call, Throwable t) {
 
             }
         });
@@ -94,17 +93,17 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
         weightAmount.setText(String.valueOf(userDetails.getWeight()));
         genderType.setText(userDetails.getGender());
         ageAmount.setText(String.valueOf(userDetails.getAge()));
-        kAmount.setText(String.valueOf(userDetails.getK()));
+        palAmount.setText(String.valueOf(userDetails.getPal()));
     }
 
     public void openUserDetailsUpdateFragment(){
-        Fragment userDetailsUpdateFragment = new UserDetailsUpdateFragment((DetailsListener) getActivity());
-        UpdateUserDetailsDTO updateUserDetailsDTO = new UpdateUserDetailsDTO();
-        updateUserDetailsDTO.fillWithData(userDetails);
+        Fragment userDetailsUpdateFragment = new UserDetailsUpdateFragment((UserDetailsListener) getActivity());
+        UserDetailsUpdateDTO userDetailsUpdateDTO = new UserDetailsUpdateDTO();
+        userDetailsUpdateDTO.fillWithData(userDetails);
 
         Bundle args = new Bundle();
 
-        args.putSerializable("updateUserDetailsDTO", updateUserDetailsDTO);
+        args.putSerializable("updateUserDetailsDTO", userDetailsUpdateDTO);
         userDetailsUpdateFragment.setArguments(args);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
@@ -113,10 +112,9 @@ public class UserDetailsFragment extends Fragment implements DetailsListener {
                 .commit();
     }
 
-
     @Override
-    public void enqueueUpdateUserDetails(UpdateUserDetailsDTO updateUserDetailsDTO) {
-        Call<Void> call = userDetailsService.updateUserDetails(authToken, updateUserDetailsDTO);
+    public void enqueueUpdateUserDetails(UserDetailsUpdateDTO userDetailsUpdateDTO) {
+        Call<Void> call = userDetailsService.updateUserDetails(authToken, userDetailsUpdateDTO);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

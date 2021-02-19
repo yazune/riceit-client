@@ -13,19 +13,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.AddFoodDTO;
-import com.agh.riceitclient.util.MealsListener;
+import com.agh.riceitclient.dto.FoodAddDTO;
+import com.agh.riceitclient.util.FoodAddTransfer;
+import com.agh.riceitclient.listener.MealListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class AddFoodFragment extends Fragment {
+public class FoodAddFragment extends Fragment {
 
     long mealId;
     TextInputLayout nameInput, kcalInput, protInput, fatInput, carbInput;
     Button confirmAddFood;
-    MealsListener mealsListener;
+    MealListener mealListener;
 
-    public AddFoodFragment(MealsListener mealsListener){
-        this.mealsListener = mealsListener;
+    public FoodAddFragment(MealListener mealListener){
+        this.mealListener = mealListener;
     }
 
 
@@ -64,23 +65,21 @@ public class AddFoodFragment extends Fragment {
         String fatStr = fatInput.getEditText().getText().toString().trim();
         String carbStr = carbInput.getEditText().getText().toString().trim();
 
-        double kcal = Double.valueOf(kcalStr);
-        double prot = Double.valueOf(protStr);
-        double fat = Double.valueOf(fatStr);
-        double carb = Double.valueOf(carbStr);
+        double kcal = Double.parseDouble(kcalStr);
+        double prot = Double.parseDouble(protStr);
+        double fat = Double.parseDouble(fatStr);
+        double carb = Double.parseDouble(carbStr);
 
-        AddFoodDTO addFoodDTO = new AddFoodDTO();
-        addFoodDTO.setMealId(mealId);
-        addFoodDTO.setName(nameStr);
-        addFoodDTO.setKcal(kcal);
-        addFoodDTO.setProtein(prot);
-        addFoodDTO.setFat(fat);
-        addFoodDTO.setCarbohydrate(carb);
+        FoodAddDTO foodAddDTO = new FoodAddDTO();
+        foodAddDTO.setMealId(mealId);
+        foodAddDTO.setName(nameStr);
+        foodAddDTO.setKcal(kcal);
+        foodAddDTO.setProtein(prot);
+        foodAddDTO.setFat(fat);
+        foodAddDTO.setCarbohydrate(carb);
 
-        mealsListener.enqueueAddFood(addFoodDTO);
+        mealListener.enqueueAddFood(foodAddDTO);
 
-        //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();   //todo not tested
-        //getActivity().getFragmentManager().beginTransaction().remove(this).commit(); //todo not tested
         hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
     }

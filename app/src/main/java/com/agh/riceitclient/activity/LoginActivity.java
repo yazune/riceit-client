@@ -2,10 +2,12 @@ package com.agh.riceitclient.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +28,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     TextView titleText;
-    Button loginBtn, createAccountBtn, forgetPasswordBtn;
+    Button loginBtn, forgetPasswordBtn;
     TextInputLayout usernameOrEmailInput, passwordInput;
 
     AuthService authService = ServiceGenerator.createService(AuthService.class);
@@ -38,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
         titleText = findViewById(R.id.login_title_text);
         loginBtn = findViewById(R.id.login_login_button);
-        createAccountBtn = findViewById(R.id.login_create_account_button);
         forgetPasswordBtn = findViewById(R.id.login_forget_password_button);
 
         usernameOrEmailInput = findViewById(R.id.login_username_or_email_input);

@@ -18,7 +18,7 @@ public class RegisterDTO implements Serializable {
 
     private int age;
 
-    private double k;
+    private double pal;
 
     public String getUsername() {
         return username;
@@ -76,11 +76,11 @@ public class RegisterDTO implements Serializable {
         this.age = age;
     }
 
-    public double getK() {
-        return k;
+    public double getPal() {
+        return pal;
     }
 
-    public void setK(double k) {
-        this.k = k;
+    public void setPal(double pal) {
+        this.pal = pal;
     }
 }

@@ -2,24 +2,32 @@ package com.agh.riceitclient.dto;
 
 import java.io.Serializable;
 
-public class UpdateSportDTO implements Serializable {
+public class SportAddDTO implements Serializable {
 
-    private long sportId;
+    private String date;
 
     private String name;
 
     private int duration;
 
-    private String sportType;
-
     private double kcalBurnt;
 
-    public long getSportId() {
-        return sportId;
+    private String sportType;
+
+    public double getKcalBurnt() {
+        return kcalBurnt;
     }
 
-    public void setSportId(long sportId) {
-        this.sportId = sportId;
+    public void setKcalBurnt(double kcalBurnt) {
+        this.kcalBurnt = kcalBurnt;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getName() {
@@ -28,14 +36,6 @@ public class UpdateSportDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getKcalBurnt() {
-        return kcalBurnt;
-    }
-
-    public void setKcalBurnt(double kcalBurnt) {
-        this.kcalBurnt = kcalBurnt;
     }
 
     public int getDuration() {

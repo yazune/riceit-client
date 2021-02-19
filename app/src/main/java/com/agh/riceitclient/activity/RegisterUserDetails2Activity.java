@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +26,7 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
 
     Button registerBtn, loginBtn;
     TextView titleText;
-    TextInputLayout heightInput, weightInput, kInput;
+    TextInputLayout heightInput, weightInput, palInput;
 
     UserService userService = ServiceGenerator.createService(UserService.class);
     RegisterDTO registerDTO;
@@ -45,12 +44,12 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
 
         heightInput = findViewById(R.id.register_user_details_2_height);
         weightInput = findViewById(R.id.register_user_details_2_weight);
-        kInput = findViewById(R.id.register_user_details_2_k);
+        palInput = findViewById(R.id.register_user_details_2_pal);
     }
 
     public void callLoginScreen(View view) {
 
-        if(!validateHeight() | !validateWeight() | !validateK()){
+        if(!validateHeight() | !validateWeight() | !validatePal()){
             return;
         }
 
@@ -120,22 +119,22 @@ public class RegisterUserDetails2Activity extends AppCompatActivity {
         }
     }
 
-    private boolean validateK(){
-        String val = kInput.getEditText().getText().toString().trim();
+    private boolean validatePal(){
+        String val = palInput.getEditText().getText().toString().trim();
 
         if(val.isEmpty()){
-            kInput.setError("Field can not be empty");
+            palInput.setError("Field can not be empty");
             return false;
         } else if(Double.parseDouble(val) < 1.0) {
-            kInput.setError("K can not be lower than 1.0");
+            palInput.setError("PAL can not be lower than 1.0");
             return false;
         } else if(Double.parseDouble(val) > 2.0) {
-            kInput.setError("K can not be bigger than 2.0");
+            palInput.setError("PAL can not be bigger than 2.0");
             return false;
         } else {
-            kInput.setError(null);
-            kInput.setErrorEnabled(false);
-            registerDTO.setK(Double.parseDouble(val));
+            palInput.setError(null);
+            palInput.setErrorEnabled(false);
+            registerDTO.setPal(Double.parseDouble(val));
             return true;
         }
     }

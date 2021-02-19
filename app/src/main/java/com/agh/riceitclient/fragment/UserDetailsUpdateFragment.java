@@ -16,28 +16,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
-import com.agh.riceitclient.util.DetailsListener;
+import com.agh.riceitclient.dto.UserDetailsUpdateDTO;
+import com.agh.riceitclient.listener.UserDetailsListener;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class UserDetailsUpdateFragment extends Fragment {
 
-    TextInputLayout heightInput, weightInput, ageInput, kInput;
+    TextInputLayout heightInput, weightInput, ageInput, palInput;
     RadioGroup genderRadioGroup;
     RadioButton maleRadio, femaleRadio;
     Button btnConfirm;
 
-    UpdateUserDetailsDTO updateUserDetailsDTO;
-    DetailsListener detailsListener;
+    UserDetailsUpdateDTO userDetailsUpdateDTO;
+    UserDetailsListener userDetailsListener;
 
-    public UserDetailsUpdateFragment(DetailsListener detailsListener){
-        this.detailsListener = detailsListener;
+    public UserDetailsUpdateFragment(UserDetailsListener userDetailsListener){
+        this.userDetailsListener = userDetailsListener;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        updateUserDetailsDTO = (UpdateUserDetailsDTO) getArguments().getSerializable("updateUserDetailsDTO");
+        userDetailsUpdateDTO = (UserDetailsUpdateDTO) getArguments().getSerializable("updateUserDetailsDTO");
     }
 
     @Nullable
@@ -48,7 +48,7 @@ public class UserDetailsUpdateFragment extends Fragment {
         heightInput = v.findViewById(R.id.details_update_height);
         weightInput = v.findViewById(R.id.details_update_weight);
         ageInput = v.findViewById(R.id.details_update_age);
-        kInput = v.findViewById(R.id.details_update_k);
+        palInput = v.findViewById(R.id.details_update_k);
         genderRadioGroup = v.findViewById(R.id.details_update_gender_group);
         maleRadio = v.findViewById(R.id.details_update_radio_male);
         femaleRadio = v.findViewById(R.id.details_update_radio_female);
@@ -68,12 +68,12 @@ public class UserDetailsUpdateFragment extends Fragment {
     }
 
     public void fillFormWithData(){
-        heightInput.getEditText().setText(String.valueOf(updateUserDetailsDTO.getHeight()));
-        weightInput.getEditText().setText(String.valueOf(updateUserDetailsDTO.getWeight()));
-        ageInput.getEditText().setText(String.valueOf(updateUserDetailsDTO.getAge()));
-        kInput.getEditText().setText(String.valueOf(updateUserDetailsDTO.getK()));
+        heightInput.getEditText().setText(String.valueOf(userDetailsUpdateDTO.getHeight()));
+        weightInput.getEditText().setText(String.valueOf(userDetailsUpdateDTO.getWeight()));
+        ageInput.getEditText().setText(String.valueOf(userDetailsUpdateDTO.getAge()));
+        palInput.getEditText().setText(String.valueOf(userDetailsUpdateDTO.getPal()));
 
-        if (updateUserDetailsDTO.getGender().equals("MALE")){
+        if (userDetailsUpdateDTO.getGender().equals("MALE")){
             maleRadio.setChecked(true);
             femaleRadio.setChecked(false);
         } else {
@@ -83,34 +83,34 @@ public class UserDetailsUpdateFragment extends Fragment {
     }
 
     public void confirmUpdatingDetails(){
-        UpdateUserDetailsDTO updateUserDetailsDTO = new UpdateUserDetailsDTO();
+        UserDetailsUpdateDTO userDetailsUpdateDTO = new UserDetailsUpdateDTO();
         String heightStr = heightInput.getEditText().getText().toString().trim();
         String weightStr = weightInput.getEditText().getText().toString().trim();
         String ageStr = ageInput.getEditText().getText().toString().trim();
-        String kStr = kInput.getEditText().getText().toString().trim();
+        String palStr = palInput.getEditText().getText().toString().trim();
 
         double height = Double.parseDouble(heightStr);
         double weight = Double.parseDouble(weightStr);
         int age = Integer.parseInt(ageStr);
-        double k = Double.parseDouble(kStr);
+        double pal = Double.parseDouble(palStr);
 
 
         if (genderRadioGroup.getCheckedRadioButtonId() == -1){
             Toast.makeText(getActivity(), "Please Select Gender", Toast.LENGTH_SHORT).show();
         } else if(maleRadio.isChecked()){
-            updateUserDetailsDTO.setGender("MALE");
+            userDetailsUpdateDTO.setGender("MALE");
         } else{
-            updateUserDetailsDTO.setGender("FEMALE");
+            userDetailsUpdateDTO.setGender("FEMALE");
         }
 
 
-        updateUserDetailsDTO.setHeight(height);
-        updateUserDetailsDTO.setWeight(weight);
-        updateUserDetailsDTO.setAge(age);
-        updateUserDetailsDTO.setK(k);
+        userDetailsUpdateDTO.setHeight(height);
+        userDetailsUpdateDTO.setWeight(weight);
+        userDetailsUpdateDTO.setAge(age);
+        userDetailsUpdateDTO.setPal(pal);
 
 
-        detailsListener.enqueueUpdateUserDetails(updateUserDetailsDTO);
+        userDetailsListener.enqueueUpdateUserDetails(userDetailsUpdateDTO);
         hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
     }

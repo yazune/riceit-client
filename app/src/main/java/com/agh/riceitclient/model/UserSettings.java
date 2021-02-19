@@ -2,24 +2,24 @@ package com.agh.riceitclient.model;
 
 public class UserSettings {
 
-    private boolean useK;
-    private boolean useManParameters;
+    private boolean usePal;
+    private boolean useMan;
     private String dietType;
 
-    public boolean isUseK() {
-        return useK;
+    public boolean isUsePal() {
+        return usePal;
     }
 
-    public void setUseK(boolean useK) {
-        this.useK = useK;
+    public void setUsePal(boolean usePal) {
+        this.usePal = usePal;
     }
 
-    public boolean isUseManParameters() {
-        return useManParameters;
+    public boolean isUseMan() {
+        return useMan;
     }
 
-    public void setUseManParameters(boolean useManParameters) {
-        this.useManParameters = useManParameters;
+    public void setUseMan(boolean useMan) {
+        this.useMan = useMan;
     }
 
     public String getDietType() {

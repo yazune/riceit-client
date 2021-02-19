@@ -13,25 +13,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.UpdateFoodDTO;
-import com.agh.riceitclient.util.MealsListener;
+import com.agh.riceitclient.util.FoodUpdateTransfer;
+import com.agh.riceitclient.listener.MealListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class UpdateFoodFragment extends Fragment {
+public class FoodUpdateFragment extends Fragment {
 
-    UpdateFoodDTO updateFoodDTO;
+    FoodUpdateTransfer foodUpdateTransfer;
     TextInputLayout nameInput, kcalInput, protInput, fatInput, carbInput;
     Button confirmUpdateFood;
-    MealsListener mealsListener;
+    MealListener mealListener;
 
-    public UpdateFoodFragment(MealsListener mealsListener){
-        this.mealsListener = mealsListener;
+    public FoodUpdateFragment(MealListener mealListener){
+        this.mealListener = mealListener;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        updateFoodDTO = (UpdateFoodDTO) getArguments().getSerializable("updateFoodDTO");
+        foodUpdateTransfer = (FoodUpdateTransfer) getArguments().getSerializable("foodUpdateTransfer");
     }
 
 
@@ -46,11 +46,11 @@ public class UpdateFoodFragment extends Fragment {
         carbInput = v.findViewById(R.id.update_food_carb);
         confirmUpdateFood = v.findViewById(R.id.btn_update_food_confirm);
 
-        nameInput.getEditText().setText(updateFoodDTO.getName());
-        kcalInput.getEditText().setText(String.valueOf(updateFoodDTO.getKcal()));
-        protInput.getEditText().setText(String.valueOf(updateFoodDTO.getProtein()));
-        fatInput.getEditText().setText(String.valueOf(updateFoodDTO.getFat()));
-        carbInput.getEditText().setText(String.valueOf(updateFoodDTO.getCarbohydrate()));
+        nameInput.getEditText().setText(foodUpdateTransfer.getName());
+        kcalInput.getEditText().setText(String.valueOf(foodUpdateTransfer.getKcal()));
+        protInput.getEditText().setText(String.valueOf(foodUpdateTransfer.getProtein()));
+        fatInput.getEditText().setText(String.valueOf(foodUpdateTransfer.getFat()));
+        carbInput.getEditText().setText(String.valueOf(foodUpdateTransfer.getCarbohydrate()));
 
         confirmUpdateFood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,21 +69,19 @@ public class UpdateFoodFragment extends Fragment {
         String fatStr = fatInput.getEditText().getText().toString().trim();
         String carbStr = carbInput.getEditText().getText().toString().trim();
 
-        double kcal = Double.valueOf(kcalStr);
-        double prot = Double.valueOf(protStr);
-        double fat = Double.valueOf(fatStr);
-        double carb = Double.valueOf(carbStr);
+        double kcal = Double.parseDouble(kcalStr);
+        double prot = Double.parseDouble(protStr);
+        double fat = Double.parseDouble(fatStr);
+        double carb = Double.parseDouble(carbStr);
 
-        updateFoodDTO.setName(nameStr);
-        updateFoodDTO.setKcal(kcal);
-        updateFoodDTO.setProtein(prot);
-        updateFoodDTO.setFat(fat);
-        updateFoodDTO.setCarbohydrate(carb);
+        foodUpdateTransfer.setName(nameStr);
+        foodUpdateTransfer.setKcal(kcal);
+        foodUpdateTransfer.setProtein(prot);
+        foodUpdateTransfer.setFat(fat);
+        foodUpdateTransfer.setCarbohydrate(carb);
 
-        mealsListener.enqueueUpdateFood(updateFoodDTO);
+        mealListener.enqueueUpdateFood(foodUpdateTransfer);
 
-        //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();   //todo not tested
-        //getActivity().getFragmentManager().beginTransaction().remove(this).commit(); //todo not tested
         hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStack();
     }

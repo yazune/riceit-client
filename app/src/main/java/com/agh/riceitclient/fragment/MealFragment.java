@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ColorStateListDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +21,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.dto.AddFoodDTO;
+import com.agh.riceitclient.dto.FoodAddDTO;
 import com.agh.riceitclient.dto.DateDTO;
-import com.agh.riceitclient.dto.AllMealsDTO;
-import com.agh.riceitclient.dto.RemoveFoodDTO;
-import com.agh.riceitclient.dto.RemoveMealDTO;
-import com.agh.riceitclient.dto.UpdateFoodDTO;
-import com.agh.riceitclient.util.MealsListener;
-import com.agh.riceitclient.util.MealsAdapter;
+import com.agh.riceitclient.dto.MealsDTO;
+import com.agh.riceitclient.dto.FoodUpdateDTO;
+import com.agh.riceitclient.util.FoodAddTransfer;
+import com.agh.riceitclient.util.FoodUpdateTransfer;
+import com.agh.riceitclient.listener.MealListener;
+import com.agh.riceitclient.util.MealAdapter;
 import com.agh.riceitclient.model.Day;
 import com.agh.riceitclient.model.Meal;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
@@ -49,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MealsFragment extends Fragment implements MealsListener{
+public class MealFragment extends Fragment implements MealListener {
 
     String authToken;
     MealService mealService = ServiceGenerator.createService(MealService.class);
@@ -66,15 +65,15 @@ public class MealsFragment extends Fragment implements MealsListener{
 
     final LocalDate finalToday = LocalDate.now();
     LocalDate today;
-    HashMap<LocalDate, ArrayList<Meal>> mealsMap;
+    HashMap<LocalDate, ArrayList<Meal>> mealMap;
     HashMap<LocalDate, Day> summaryMap;
 
     Button prevDayBtn, nextDayBtn;
 
-    RecyclerView mealsRv;
-    MealsAdapter mealsAdapter;
+    RecyclerView mealRv;
+    MealAdapter mealAdapter;
 
-    boolean isMealsAdapterAssigned;
+    boolean isMealAdapterAssigned;
 
     @Nullable
     @Override
@@ -133,18 +132,18 @@ public class MealsFragment extends Fragment implements MealsListener{
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RiceItClient", Context.MODE_PRIVATE);
         authToken = sharedPreferences.getString("TOKEN", null); //second parameter is default
 
-        mealsRv = v.findViewById(R.id.meals_rv);
-        mealsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mealRv = v.findViewById(R.id.meals_rv);
+        mealRv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
 
-        mealsAdapter = new MealsAdapter(getActivity(), supportFragmentManager);
-        isMealsAdapterAssigned = false;
+        mealAdapter = new MealAdapter(getActivity(), supportFragmentManager);
+        isMealAdapterAssigned = false;
 
         today = LocalDate.now();
         setDates();
 
-        mealsMap = new HashMap<>();
+        mealMap = new HashMap<>();
         summaryMap = new HashMap<>();
 
         enqueueGetMeals(today);
@@ -155,13 +154,13 @@ public class MealsFragment extends Fragment implements MealsListener{
 
     private void updateMealsLayout(ArrayList<Meal> mealsResponse){
 
-        mealsAdapter.setMeals(mealsResponse);
-        mealsMap.put(today, mealsResponse);
+        mealAdapter.setMeals(mealsResponse);
+        mealMap.put(today, mealsResponse);
 
-        if(!isMealsAdapterAssigned){
-            mealsRv.setAdapter(mealsAdapter);
-            isMealsAdapterAssigned = true;
-        } else mealsAdapter.notifyDataSetChanged();
+        if(!isMealAdapterAssigned){
+            mealRv.setAdapter(mealAdapter);
+            isMealAdapterAssigned = true;
+        } else mealAdapter.notifyDataSetChanged();
     }
 
     private void updateSummaryLayout(Day day){
@@ -196,7 +195,7 @@ public class MealsFragment extends Fragment implements MealsListener{
 
         int kcalProgress, protProgress, fatProgress, carbProgress;
 
-        if(day.isUseK()) {
+        if(day.isUsePal()) {
             kcalMid.setVisibility(View.GONE);
             protMid.setVisibility(View.GONE);
             fatMid.setVisibility(View.GONE);
@@ -311,9 +310,9 @@ public class MealsFragment extends Fragment implements MealsListener{
     }
 
     private void loadMealsWhenChangingDays(LocalDate date){
-        if (mealsMap.containsKey(date)){
-            mealsAdapter.setMeals(mealsMap.get(date));
-            mealsAdapter.notifyDataSetChanged();
+        if (mealMap.containsKey(date)){
+            mealAdapter.setMeals(mealMap.get(date));
+            mealAdapter.notifyDataSetChanged();
         } else{
             enqueueGetMeals(date);
         }
@@ -329,18 +328,18 @@ public class MealsFragment extends Fragment implements MealsListener{
 
     public void enqueueGetMeals(LocalDate date){
         DateDTO dateDTO = new DateDTO(date.toString());
-        Call<AllMealsDTO> call = mealService.showAllMeals(authToken, dateDTO);
+        Call<MealsDTO> call = mealService.getMeals(authToken, dateDTO);
 
-        call.enqueue(new Callback<AllMealsDTO>() {
+        call.enqueue(new Callback<MealsDTO>() {
             @Override
-            public void onResponse(Call<AllMealsDTO> call, Response<AllMealsDTO> response) {
+            public void onResponse(Call<MealsDTO> call, Response<MealsDTO> response) {
                 if(response.isSuccessful()){
                     updateMealsLayout(response.body().getMeals());
                 }
             }
 
             @Override
-            public void onFailure(Call<AllMealsDTO> call, Throwable t) {
+            public void onFailure(Call<MealsDTO> call, Throwable t) {
 
             }
         });
@@ -366,8 +365,7 @@ public class MealsFragment extends Fragment implements MealsListener{
     }
 
     public void enqueueRemoveMeal(long mealId){
-        RemoveMealDTO removeMealDTO = new RemoveMealDTO(mealId);
-        Call<Void> call = mealService.removeMeal(authToken, removeMealDTO);
+        Call<Void> call = mealService.removeMeal(authToken, mealId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -385,8 +383,7 @@ public class MealsFragment extends Fragment implements MealsListener{
     }
 
     public void enqueueRemoveFood(long foodId){
-        RemoveFoodDTO removeFoodDTO = new RemoveFoodDTO(foodId);
-        Call<Void> call = mealService.removeFood(authToken, removeFoodDTO);
+        Call<Void> call = mealService.removeFood(authToken, foodId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -404,8 +401,8 @@ public class MealsFragment extends Fragment implements MealsListener{
     }
 
     @Override
-    public void enqueueAddFood(AddFoodDTO addFoodDTO){
-        Call<Void> call = mealService.addFood(authToken, addFoodDTO);
+    public void enqueueAddFood(FoodAddDTO foodAddDTO){
+        Call<Void> call = mealService.addFood(authToken, foodAddDTO);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -423,8 +420,14 @@ public class MealsFragment extends Fragment implements MealsListener{
     }
 
     @Override
-    public void enqueueUpdateFood(UpdateFoodDTO updateFoodDTO){
-        Call<Void> call = mealService.updateFood(authToken, updateFoodDTO);
+    public void enqueueUpdateFood(FoodUpdateTransfer foodUpdateTransfer){
+        FoodUpdateDTO dto = new FoodUpdateDTO();
+        dto.setName(foodUpdateTransfer.getName());
+        dto.setKcal(foodUpdateTransfer.getKcal());
+        dto.setProtein(foodUpdateTransfer.getProtein());
+        dto.setFat(foodUpdateTransfer.getFat());
+        dto.setCarbohydrate(foodUpdateTransfer.getCarbohydrate());
+        Call<Void> call = mealService.updateFood(authToken, foodUpdateTransfer.getFoodId(), dto);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

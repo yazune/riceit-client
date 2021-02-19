@@ -1,8 +1,6 @@
 package com.agh.riceitclient.util;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,27 +13,23 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agh.riceitclient.R;
-import com.agh.riceitclient.activity.MainActivity;
-import com.agh.riceitclient.dto.RemoveSportDTO;
-import com.agh.riceitclient.dto.UpdateSportDTO;
-import com.agh.riceitclient.dto.UpdateUserDetailsDTO;
-import com.agh.riceitclient.fragment.SportsUpdateFragment;
-import com.agh.riceitclient.fragment.UserDetailsUpdateFragment;
+import com.agh.riceitclient.fragment.SportUpdateFragment;
+import com.agh.riceitclient.listener.SportListener;
 import com.agh.riceitclient.model.Sport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.ItemViewHolder>{
+public class SportAdapter extends RecyclerView.Adapter<SportAdapter.ItemViewHolder>{
 
     private ArrayList<Sport> sports;
-    HashMap<String, String> sportsTypeMap = SportConstants.generateMapWithCodesAsKeys();
+    HashMap<String, String> sportTypeMap = SportConstants.generateMapWithCodesAsKeys();
 
-    SportsListener sportsListener;
+    SportListener sportListener;
     FragmentManager supportFragmentManager;
 
-    public SportsAdapter(SportsListener sportsListener, FragmentManager supportFragmentManager) {
-        this.sportsListener = sportsListener;
+    public SportAdapter(SportListener sportListener, FragmentManager supportFragmentManager) {
+        this.sportListener = sportListener;
         this.supportFragmentManager = supportFragmentManager;
     }
 
@@ -61,10 +55,10 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.ItemViewHo
 
     @NonNull
     @Override
-    public SportsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SportAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sport_item, parent, false);
 
-        return new SportsAdapter.ItemViewHolder(view);
+        return new SportAdapter.ItemViewHolder(view);
     }
 
     @Override
@@ -72,7 +66,7 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.ItemViewHo
         Sport sport = sports.get(position);
         holder.name.setText(sport.getName());
 
-        String type = sportsTypeMap.get(sport.getSportType());
+        String type = sportTypeMap.get(sport.getSportType());
         holder.type.setText(type);
         holder.duration.setText(Integer.toString(sport.getDuration()));
         holder.kcalBurnt.setText(Double.toString(sport.getKcalBurnt()));
@@ -80,21 +74,21 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.ItemViewHo
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Fragment sportsUpdateFragment = new SportsUpdateFragment(sportsListener);
-                UpdateSportDTO updateSportDTO = new UpdateSportDTO();
-                updateSportDTO.setName(sport.getName());
-                updateSportDTO.setDuration(sport.getDuration());
-                updateSportDTO.setKcalBurnt(sport.getKcalBurnt());
-                updateSportDTO.setSportId(sport.getId());
-                updateSportDTO.setSportType(sportsTypeMap.get(sport.getSportType()));
+                Fragment sportUpdateFragment = new SportUpdateFragment(sportListener);
+                SportUpdateTransfer sportUpdateTransfer = new SportUpdateTransfer();
+                sportUpdateTransfer.setName(sport.getName());
+                sportUpdateTransfer.setDuration(sport.getDuration());
+                sportUpdateTransfer.setKcalBurnt(sport.getKcalBurnt());
+                sportUpdateTransfer.setSportId(sport.getId());
+                sportUpdateTransfer.setSportType(sportTypeMap.get(sport.getSportType()));
 
                 Bundle args = new Bundle();
 
-                args.putSerializable("updateSportDTO", updateSportDTO);
-                sportsUpdateFragment.setArguments(args);
+                args.putSerializable("sportUpdateTransfer", sportUpdateTransfer);
+                sportUpdateFragment.setArguments(args);
                 supportFragmentManager
                         .beginTransaction()
-                        .add(R.id.main_container, sportsUpdateFragment, "sportsUpdateFragment")
+                        .add(R.id.main_container, sportUpdateFragment, "sportUpdateFragment")
                         .addToBackStack(null)
                         .commit();
                 return true;
@@ -104,7 +98,7 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.ItemViewHo
         holder.btnRemoveSport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sportsListener.enqueueRemoveSport(new RemoveSportDTO(sport.getId()));
+                sportListener.enqueueRemoveSport(new IdTransfer(sport.getId()));
             }
         });
     }
