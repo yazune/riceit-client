@@ -32,7 +32,7 @@
         android:layout_marginRight="4dp"
         android:layout_below="@id/dialog_error_bar"
         android:fontFamily="sans-serif-black"
-        android:text="Oh snap!"
+        android:text="Ooops!"
         android:textSize="16sp" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-black"
-        android:text="Change a few things up and try submitting again."
+        android:text="Something went wrong. Let's try one more time."
         android:textSize="12sp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"

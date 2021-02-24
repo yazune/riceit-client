@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.agh.riceitclient.dto.SportAddDTO;
 import com.agh.riceitclient.dto.DateDTO;
 import com.agh.riceitclient.dto.SportsDTO;
 import com.agh.riceitclient.dto.SportUpdateDTO;
+import com.agh.riceitclient.listener.MealListener;
 import com.agh.riceitclient.model.Sport;
 import com.agh.riceitclient.retrofit.ServiceGenerator;
 import com.agh.riceitclient.service.SportService;
@@ -179,7 +181,8 @@ public class SportFragment extends Fragment implements SportListener {
 
             @Override
             public void onFailure(Call<SportsDTO> call, Throwable t) {
-
+                ErrorFragment errorFragment = new ErrorFragment();
+                errorFragment.show(getActivity().getSupportFragmentManager(), "errorFragment");
             }
         });
     }
