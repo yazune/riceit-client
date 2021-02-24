@@ -131,7 +131,7 @@
                 android:id="@+id/details_update_k"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="K"
+                android:hint="Physical Activity Level"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:startIconDrawable="@drawable/icon_k_28"
                 app:startIconTint="@color/black"

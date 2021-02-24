@@ -177,10 +177,6 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             SportFragment sportFragment = new SportFragment();
             transaction.replace(R.id.main_container, sportFragment, "sportFragment");
         }
-        else if (position == POS_ABOUT_US) {
-//            RandomFragment randomFragment = new RandomFragment();
-//            transaction.replace(R.id.main_container, randomFragment);
-        }
         else if (position == POS_LOGOUT) {
             finish();
         }
